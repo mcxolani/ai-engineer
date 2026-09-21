@@ -19,7 +19,7 @@ The schedule can stretch around your available time.
 - [x] Runnable FastAPI starter with typed input and output.
 - [x] Explicit offline demo and optional OpenAI adapter.
 - [x] Local tests for invalid inputs and provider failures.
-- [ ] Complete the Day 1 exercise and explain the flow.
+- [ ] Complete the 20-minute Day 1 exercise and explain the flow.
 - [ ] Verify real API access and evaluate initial examples.
 - [ ] Record latency and token usage; calculate cost using configured prices.
 - [ ] Save classifications to PostgreSQL and add migrations.

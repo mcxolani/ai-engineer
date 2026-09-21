@@ -1,22 +1,22 @@
 import asyncio
 from types import SimpleNamespace
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 import httpx
 import pytest
 from fastapi.testclient import TestClient
 from openai import APITimeoutError, RateLimitError
 
-from app.classifier import ClassificationUnavailable, OpenAIClassifier
+from app import classifier, main
+from app.classifier import ClassificationUnavailable, classify_message
 from app.config import Settings
-from app.main import create_app, get_classifier
 from app.schemas import Classification
 
 
 @pytest.fixture
-def client():
-    app = create_app(Settings(_env_file=None, classifier_provider="demo"))
-    with TestClient(app) as client:
+def client(monkeypatch):
+    monkeypatch.setattr(main, "settings", Settings(_env_file=None, classifier_provider="demo"))
+    with TestClient(main.app) as client:
         yield client
 
 
@@ -38,11 +38,11 @@ def test_demo_request(client):
         {"message": "Hi", "admin": True},
     ],
 )
-def test_invalid_input_never_calls_provider(client, body):
-    provider = SimpleNamespace(classify=AsyncMock())
-    client.app.dependency_overrides[get_classifier] = lambda: provider
+def test_invalid_input_never_calls_provider(client, monkeypatch, body):
+    provider = AsyncMock()
+    monkeypatch.setattr(main, "classify_message", provider)
     assert client.post("/tickets/classify", json=body).status_code == 422
-    provider.classify.assert_not_called()
+    provider.assert_not_called()
 
 
 @pytest.mark.parametrize(
@@ -60,32 +60,43 @@ def test_invalid_input_never_calls_provider(client, body):
         ),
     ],
 )
-def test_provider_failures_are_sanitized(client, error, status):
-    provider = SimpleNamespace(classify=AsyncMock(side_effect=error))
-    client.app.dependency_overrides[get_classifier] = lambda: provider
+def test_provider_failures_are_sanitized(client, monkeypatch, error, status):
+    monkeypatch.setattr(main, "classify_message", AsyncMock(side_effect=error))
     response = client.post("/tickets/classify", json={"message": "Help"})
     assert response.status_code == status
     assert "private provider details" not in response.text
 
 
 @pytest.mark.parametrize("status", ["completed", "incomplete"])
-def test_missing_output_is_not_a_success(status):
+def test_missing_output_is_not_a_success(monkeypatch, status):
     sdk = SimpleNamespace(
         responses=SimpleNamespace(
             parse=AsyncMock(return_value=SimpleNamespace(status=status, output_parsed=None))
         )
     )
+    context = MagicMock()
+    context.__aenter__ = AsyncMock(return_value=sdk)
+    context.__aexit__ = AsyncMock(return_value=False)
+    monkeypatch.setattr(classifier, "AsyncOpenAI", lambda **kwargs: context)
+    settings = Settings(_env_file=None, classifier_provider="openai", openai_api_key="test-key")
     with pytest.raises(ClassificationUnavailable):
-        asyncio.run(OpenAIClassifier(sdk, "test-model").classify("Help"))
+        asyncio.run(classify_message("Help", settings))
+    context.__aexit__.assert_awaited_once()
 
 
-def test_live_adapter_passes_ticket_as_data_and_returns_parsed_output():
+def test_live_adapter_passes_ticket_as_data_and_returns_parsed_output(monkeypatch):
     expected = Classification(
         category="account", priority="medium", sentiment="neutral", summary="Login fails."
     )
     parse = AsyncMock(return_value=SimpleNamespace(status="completed", output_parsed=expected))
     sdk = SimpleNamespace(responses=SimpleNamespace(parse=parse))
-    result = asyncio.run(OpenAIClassifier(sdk, "test-model").classify("I cannot log in"))
+    context = MagicMock()
+    context.__aenter__ = AsyncMock(return_value=sdk)
+    context.__aexit__ = AsyncMock(return_value=False)
+    monkeypatch.setattr(classifier, "AsyncOpenAI", lambda **kwargs: context)
+    settings = Settings(_env_file=None, classifier_provider="openai", openai_api_key="test-key")
+    result = asyncio.run(classify_message("I cannot log in", settings))
+    context.__aexit__.assert_awaited_once()
     assert result == expected
     args = parse.call_args.kwargs
     assert args["input"][1] == {"role": "user", "content": "I cannot log in"}

@@ -1,7 +1,6 @@
-from typing import Protocol
-
 from openai import AsyncOpenAI
 
+from app.config import Settings
 from app.schemas import Classification
 
 SYSTEM_PROMPT = """Classify a customer support ticket.
@@ -21,12 +20,8 @@ class ClassificationUnavailable(Exception):
     """The provider returned no usable structured classification."""
 
 
-class Classifier(Protocol):
-    async def classify(self, message: str) -> Classification: ...
-
-
-class DemoClassifier:
-    async def classify(self, message: str) -> Classification:
+async def classify_message(message: str, settings: Settings) -> Classification:
+    if settings.classifier_provider == "demo":
         # Intentionally fixed: proves API wiring, not classification accuracy.
         return Classification(
             category="billing",
@@ -35,15 +30,12 @@ class DemoClassifier:
             summary="Demo result: customer reports a duplicate payment.",
         )
 
-
-class OpenAIClassifier:
-    def __init__(self, client: AsyncOpenAI, model: str):
-        self.client = client
-        self.model = model
-
-    async def classify(self, message: str) -> Classification:
-        response = await self.client.responses.parse(
-            model=self.model,
+    # Close the HTTP connection when this request finishes.
+    async with AsyncOpenAI(
+        api_key=settings.openai_api_key.get_secret_value(), timeout=20.0, max_retries=2
+    ) as client:
+        response = await client.responses.parse(
+            model=settings.openai_model,
             input=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message},
