@@ -21,6 +21,17 @@ Open <http://127.0.0.1:8000/docs>. Expand `POST /tickets/classify`, click
 
 **Demo mode returns a fixed example for every message. No API key is needed.**
 
+## Debug in VS Code
+
+Install the Python and Python Debugger extensions, then select **Debug FastAPI**
+in **Run and Debug** and press **F5**. Set a breakpoint in `app/main.py` and send
+a request from <http://127.0.0.1:8000/docs>. Stop any existing server on port 8000
+first. Restart the debugger after changing code.
+
+The workspace defaults to `.venv`. If another interpreter is already selected,
+use **Python: Select Interpreter** to select `.venv`. Choose **Debug pytest** to
+debug the test suite, or use the Testing panel to debug individual tests.
+
 ## Understand three steps
 
 1. `app/schemas.py` defines the input and output fields.
