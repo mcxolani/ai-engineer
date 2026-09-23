@@ -27,7 +27,7 @@ async def classify_message(message: str, settings: Settings) -> Classification:
             category="billing",
             priority="high",
             sentiment="neutral",
-            summary="Demo result: customer reports a duplicate payment.",
+            summary="Demo result: customer reports a duplicate payment and requesting a refund.",
         )
 
     # Close the HTTP connection when this request finishes.

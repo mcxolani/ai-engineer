@@ -34,4 +34,4 @@ In `app/classifier.py`, change the demo's summary text. Send the request again
 and check that your new text appears.
 
 You're done when you can point to where the message enters and where the result
-comes from. Next session: replace the fixed demo answer with a real AI response.
+comes from. Next: [Day 2 — get a real AI response](day-02.md).

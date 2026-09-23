@@ -38,7 +38,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Start with the [20-minute first lesson](docs/day-01.md).
+Day 1 is complete. Next: [Day 2 — get a real AI response](docs/day-02.md) (20–30 minutes).
+The [first lesson](docs/day-01.md) is available for reference.
 
 ## Later: turn on AI
 
