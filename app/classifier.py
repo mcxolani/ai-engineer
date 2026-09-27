@@ -13,6 +13,7 @@ Sentiment: frustrated only when the wording expresses frustration; positive for
 explicit appreciation; neutral otherwise. Do not infer emotion from category.
 Summary: one short factual sentence, without inventing details or quoting personal
 contact details. For unclear text use general/low/neutral and describe the ambiguity.
+A problem alone does not imply frustration. “My payment went through twice” has neutral sentiment.
 """
 
 

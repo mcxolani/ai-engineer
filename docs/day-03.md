@@ -51,4 +51,4 @@ A perfect score on five examples does not establish general accuracy. Likewise,
 one better run does not prove the prompt improved: model answers can vary.
 
 You're done when the worksheet contains five results, a score, and one observation.
-Share those with me. Next session: automate this check with a small Python script.
+Share those with me. Next: [Day 4 — automate the check](day-04.md).
