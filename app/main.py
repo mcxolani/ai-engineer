@@ -1,14 +1,12 @@
 import psycopg
-from fastapi import FastAPI, HTTPException, Response
-from fastapi import Path
+from fastapi import FastAPI, HTTPException, Path, Response
 from openai import APIError, APITimeoutError, RateLimitError
 from pydantic import ValidationError
 
 from app.classifier import ClassificationUnavailable, classify_message
 from app.config import Settings
-from app.schemas import Classification, TicketRequest
-from app.database import save_classification, get_classification
-from app.schemas import SavedClassification
+from app.database import get_classification, save_classification
+from app.schemas import Classification, SavedClassification, TicketRequest
 
 app = FastAPI(
     title="Support Ticket Classifier",

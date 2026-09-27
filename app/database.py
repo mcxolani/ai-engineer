@@ -1,9 +1,9 @@
 import psycopg
+from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
-from app.schemas import Classification
-from psycopg.rows import dict_row
-from app.schemas import SavedClassification
+from app.schemas import Classification, SavedClassification
+
 
 async def save_classification(
     database_url: str, message: str, result: Classification

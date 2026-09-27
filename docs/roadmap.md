@@ -31,8 +31,9 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 10](day-10.md): 15 tests passed; HTTP 200 with saved ID 4; verified technical ticket in PostgreSQL.
 - [x] Complete [Day 11](day-11.md): 18 tests passed; saved row 200/technical, missing ID 404, invalid ID 422.
 - [x] Complete [Day 12](day-12.md): version 001 recorded once; ticket count stayed 4/4; practice table empty; saved ticket still returns 200.
-- [ ] Complete [Day 13](day-13.md): run the API and PostgreSQL together with Docker Compose.
-- [ ] Add CI and a short architecture/demo write-up.
+- [x] Complete [Day 13](day-13.md): both containers healthy; ticket 4 returned 200/technical before and after API restart.
+- [ ] Complete [Day 14](day-14.md): run lint and mocked tests automatically in GitHub Actions.
+- [ ] Write a short architecture/demo explanation for the portfolio.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

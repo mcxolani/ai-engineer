@@ -136,6 +136,7 @@ def test_api_saving(client, monkeypatch, fails):
 def test_read_saved_ticket(client, monkeypatch, status):
     import psycopg
     from pydantic import SecretStr
+
     from app.schemas import SavedClassification
 
     saved = SavedClassification(

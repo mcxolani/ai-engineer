@@ -133,3 +133,8 @@ GET /tickets/4 after API restart: __
 
 You're done when the containerized API reads the same saved row before and after
 restart. Next session: run the tests automatically in CI.
+
+Completed: both containers reported healthy; ticket 4 returned 200 with category
+`technical`, and returned 200 again after the API restart.
+
+Next: [Day 14 — automate the checks](day-14.md).
