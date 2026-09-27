@@ -1,12 +1,14 @@
 import psycopg
 from fastapi import FastAPI, HTTPException, Response
+from fastapi import Path
 from openai import APIError, APITimeoutError, RateLimitError
 from pydantic import ValidationError
 
 from app.classifier import ClassificationUnavailable, classify_message
 from app.config import Settings
 from app.schemas import Classification, TicketRequest
-from app.database import save_classification
+from app.database import save_classification, get_classification
+from app.schemas import SavedClassification
 
 app = FastAPI(
     title="Support Ticket Classifier",
@@ -39,3 +41,20 @@ async def classify_ticket(ticket: TicketRequest, response: Response) -> Classifi
         raise HTTPException(502, "The provider could not return a valid classification") from exc
     except psycopg.Error as exc:
         raise HTTPException(503, "Could not save the classification") from exc
+
+
+@app.get("/tickets/{classification_id}", response_model=SavedClassification)
+async def read_ticket(
+    classification_id: int = Path(gt=0, le=9223372036854775807),
+) -> SavedClassification:
+    database_url = settings.database_url.get_secret_value()
+    if not database_url:
+        raise HTTPException(503, "Database is not configured")
+    try:
+        saved = await get_classification(database_url, classification_id)
+    except psycopg.Error as exc:
+        raise HTTPException(503, "Could not read the classification") from exc
+
+    if saved is None:
+        raise HTTPException(404, "Classification not found")
+    return saved

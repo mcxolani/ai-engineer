@@ -2,7 +2,8 @@ import psycopg
 from psycopg.types.json import Jsonb
 
 from app.schemas import Classification
-
+from psycopg.rows import dict_row
+from app.schemas import SavedClassification
 
 async def save_classification(
     database_url: str, message: str, result: Classification
@@ -20,6 +21,18 @@ async def save_classification(
     return saved_id
 
 
-#     async def save_classification(
-#         ^^^^^^^^^^^^^^^^^^^^^^^^^^
-# TypeError: 'coroutine' object does not support the asynchronous context manager protocol
+async def get_classification(
+    database_url: str, classification_id: int
+) -> SavedClassification | None:
+    async with await psycopg.AsyncConnection.connect(
+        database_url, connect_timeout=5, row_factory=dict_row
+    ) as connection:
+        cursor = await connection.execute(
+            "SELECT id, message, result, created_at FROM classifications WHERE id = %s",
+            (classification_id,),
+        )
+        row = await cursor.fetchone()
+
+    if row is None:
+        return None
+    return SavedClassification.model_validate(row)

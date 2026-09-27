@@ -130,3 +130,37 @@ def test_api_saving(client, monkeypatch, fails):
         assert response.status_code == 200
         assert response.headers["X-Classification-ID"] == "42"
         assert response.json() == save.call_args.args[2].model_dump()
+
+
+@pytest.mark.parametrize("status", [200, 404, 503])
+def test_read_saved_ticket(client, monkeypatch, status):
+    import psycopg
+    from pydantic import SecretStr
+    from app.schemas import SavedClassification
+
+    saved = SavedClassification(
+        id=4,
+        message="The photo uploader shows an error.",
+        result=Classification(
+            category="technical", priority="medium", sentiment="neutral",
+            summary="Photo upload fails.",
+        ),
+        created_at="2026-09-27T12:00:00Z",
+    )
+    main.settings.database_url = SecretStr("postgresql://unused-in-test")
+    read = AsyncMock(return_value=saved if status == 200 else None)
+    if status == 503:
+        read.side_effect = psycopg.OperationalError("private database details")
+    model = AsyncMock()
+    monkeypatch.setattr(main, "get_classification", read)
+    monkeypatch.setattr(main, "classify_message", model)
+
+    response = client.get("/tickets/4")
+    assert response.status_code == status
+    read.assert_awaited_once_with("postgresql://unused-in-test", 4)
+    model.assert_not_called()
+    if status == 200:
+        assert response.json() == saved.model_dump(mode="json")
+    else:
+        expected = "Classification not found" if status == 404 else "Could not read the classification"
+        assert response.json() == {"detail": expected}

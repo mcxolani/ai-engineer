@@ -1,4 +1,5 @@
 from typing import Literal
+from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -16,3 +17,10 @@ class Classification(BaseModel):
     priority: Literal["low", "medium", "high"]
     sentiment: Literal["positive", "neutral", "frustrated"]
     summary: str = Field(min_length=1, max_length=300)
+
+
+class SavedClassification(BaseModel):
+    id: int
+    message: str
+    result: Classification
+    created_at: datetime

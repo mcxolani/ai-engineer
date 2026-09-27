@@ -148,3 +148,8 @@ Category read back: __
 ```
 
 Next session: retrieve a saved classification through the API.
+
+Completed: 15 tests passed, HTTP 200, `X-Classification-ID: 4`. Row 4 contains
+the photo-upload error message and category `technical`, verified in PostgreSQL.
+
+Next: [Day 11 — read a saved ticket](day-11.md).
