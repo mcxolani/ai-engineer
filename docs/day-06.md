@@ -80,3 +80,8 @@ Total tokens: __
 
 These are counts reported for returned responses, not a complete billing ledger
 for retries or failed calls. Next session: use token counts to estimate cost.
+
+Completed: learner reported **6/6**, with **277 input tokens + 29 output tokens
+= 306 total tokens** for the duplicate-payment example.
+
+Next: [Day 7 — estimate cost](day-07.md).

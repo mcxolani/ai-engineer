@@ -38,9 +38,10 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Days 1–5 are complete. Next: [Day 6 — inspect token usage](docs/day-06.md) (15–20 minutes).
-[Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md), and
-[Day 4](docs/day-04.md), and [Day 5](docs/day-05.md) are available for reference.
+Days 1–6 are complete. Next: [Day 7 — estimate cost](docs/day-07.md) (15–20 minutes).
+[Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
+[Day 4](docs/day-04.md), [Day 5](docs/day-05.md), and [Day 6](docs/day-06.md)
+are available for reference.
 
 ## Later: turn on AI
 
