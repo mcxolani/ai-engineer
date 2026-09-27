@@ -30,8 +30,8 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 9](day-09.md): payment row 2 read back as billing; login row 3 as account.
 - [x] Complete [Day 10](day-10.md): 15 tests passed; HTTP 200 with saved ID 4; verified technical ticket in PostgreSQL.
 - [x] Complete [Day 11](day-11.md): 18 tests passed; saved row 200/technical, missing ID 404, invalid ID 422.
-- [ ] Complete [Day 12](day-12.md): create and apply a baseline SQL migration, preserving existing rows.
-- [ ] Package API and database with Docker Compose.
+- [x] Complete [Day 12](day-12.md): version 001 recorded once; ticket count stayed 4/4; practice table empty; saved ticket still returns 200.
+- [ ] Complete [Day 13](day-13.md): run the API and PostgreSQL together with Docker Compose.
 - [ ] Add CI and a short architecture/demo write-up.
 
 Each increment should leave a working service. Start portfolio and interview notes

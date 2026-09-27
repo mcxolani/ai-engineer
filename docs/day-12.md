@@ -97,3 +97,9 @@ GET /tickets/4 status: __
 ```
 
 Next session: run the API alongside PostgreSQL with Docker Compose.
+
+Completed: `001_create_classifications` recorded once after rerunning; existing
+ticket count stayed 4/4; practice table contained zero tickets; `GET /tickets/4`
+still returned 200.
+
+Next: [Day 13 — run the app in Docker](day-13.md).
