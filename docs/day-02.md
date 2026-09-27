@@ -70,3 +70,5 @@ If a call fails, share the HTTP status and error message, without credentials.
 If you don't have a key yet, write your expected answers and read the call; leave
 the live-call step pending. Set `CLASSIFIER_PROVIDER=demo` and restart to return
 to the offline example.
+
+Next: [Day 3 — check the answers](day-03.md).

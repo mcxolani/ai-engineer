@@ -20,7 +20,8 @@ The schedule can stretch around your available time.
 - [x] Explicit offline demo and optional OpenAI adapter.
 - [x] Local tests for invalid inputs and provider failures.
 - [x] Complete the 20-minute Day 1 exercise and explain the flow (completed 2026-09-23).
-- [ ] Complete [Day 2](day-02.md): verify real API access and compare three examples.
+- [x] Complete [Day 2](day-02.md): verify real API access and compare three examples (reported complete).
+- [ ] Complete [Day 3](day-03.md): score five tickets and investigate one result.
 - [ ] Record latency and token usage; calculate cost using configured prices.
 - [ ] Save classifications to PostgreSQL and add migrations.
 - [ ] Package API and database with Docker Compose.
