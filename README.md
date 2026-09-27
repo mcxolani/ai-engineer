@@ -1,5 +1,10 @@
 # Support Ticket Classifier
 
+This service classify customers tickets for support team
+
+[Project walkthrough](docs/project-01.md)
+
+
 Our first project accepts a customer message and returns a category, priority,
 sentiment, and summary.
 
@@ -38,18 +43,20 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Days 1–13 are complete. Next: [Day 14 — automate the checks](docs/day-14.md) (20–30 minutes).
+Days 1–14 are complete. Next: [Day 15 — explain and demonstrate your project](docs/day-15.md) (20–30 minutes).
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
 [Day 7](docs/day-07.md), [Day 8](docs/day-08.md), [Day 9](docs/day-09.md),
-[Day 10](docs/day-10.md), [Day 11](docs/day-11.md), [Day 12](docs/day-12.md), and [Day 13](docs/day-13.md)
+[Day 10](docs/day-10.md), [Day 11](docs/day-11.md), [Day 12](docs/day-12.md),
+[Day 13](docs/day-13.md), and [Day 14](docs/day-14.md)
 are available for reference.
 
 ## Later: turn on AI
 
-Copy `.env.example` to `.env`. Set `CLASSIFIER_PROVIDER=openai` and add your
+Copy `.env.example` to `.env` if it doesn't exist. Set `CLASSIFIER_PROVIDER=openai` and add your
 `OPENAI_API_KEY`, then restart the server. Real requests send the message to OpenAI
-and incur API charges. Keep the key in `.env`, which is ignored by Git.
+and incur API charges, demo does not need keys. Keep the key in `.env`, which is ignored by Git.
+the `DATABASE_URL` enables the saving of the ticket to db
 
 The implementation follows the [OpenAI Structured Outputs guide](https://developers.openai.com/api/docs/guides/structured-outputs).
 
@@ -63,6 +70,17 @@ source .venv/bin/activate
 python -m pip install -e '.[dev]'
 uvicorn app.main:app --reload
 ```
+
+## start postgress and api
+
+```bash
+docker compose config --quiet
+docker compose up -d --wait db
+docker compose exec -T db psql -X -U ticket_app -d tickets --set=ON_ERROR_STOP=1 --single-transaction --file=- < migrations/001_create_classifications.sql
+docker compose up -d --build --wait api
+docker compose ps
+```
+
 
 Checks: `pytest -q` and `ruff check .`. Tests make no paid API calls.
 

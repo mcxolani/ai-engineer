@@ -110,3 +110,8 @@ GitHub Actions tests: pass/fail/pending
 
 You're done when the workflow has run successfully on GitHub. Next session:
 write a short project walkthrough for your portfolio.
+
+Completed: learner reported local lint passing, 18 local tests passing, and both
+GitHub Actions lint and tests passing.
+
+Next: [Day 15 — explain and demonstrate your project](day-15.md).

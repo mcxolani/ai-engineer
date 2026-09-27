@@ -32,8 +32,8 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 11](day-11.md): 18 tests passed; saved row 200/technical, missing ID 404, invalid ID 422.
 - [x] Complete [Day 12](day-12.md): version 001 recorded once; ticket count stayed 4/4; practice table empty; saved ticket still returns 200.
 - [x] Complete [Day 13](day-13.md): both containers healthy; ticket 4 returned 200/technical before and after API restart.
-- [ ] Complete [Day 14](day-14.md): run lint and mocked tests automatically in GitHub Actions.
-- [ ] Write a short architecture/demo explanation for the portfolio.
+- [x] Complete [Day 14](day-14.md): lint and 18 tests passed locally; GitHub Actions lint and tests reported passing.
+- [ ] Complete [Day 15](day-15.md): finish the project walkthrough and demonstrate a save/read flow.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
