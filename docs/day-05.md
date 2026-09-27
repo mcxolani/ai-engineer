@@ -19,11 +19,18 @@ Below `correct = 0`, add:
 durations = []
 ```
 
-Inside the `for` loop, immediately before its `try:`, add:
+Inside the `for` loop, immediately before its `try:`, add the timer. It must reset
+for every ticket. The start of the loop should look like this:
 
 ```python
-started = perf_counter()
+    for number, (message, expected) in enumerate(cases, start=1):
+        started = perf_counter()
+        try:
+            response = client.post("/tickets/classify", json={"message": message})
 ```
+
+Do not put `started` above the loop: that measures cumulative time since the
+script began, rather than the duration of each ticket.
 
 After the existing `except` block, add a `finally` block. The end of the loop
 should look like this, with `finally` aligned with `except`:
@@ -81,3 +88,15 @@ You're done when you can report both quality and timing from one run. There is
 no target speed yet; these measurements are your starting point. If an attempt
 fails, report it alongside the average so a fast error is not mistaken for a fast
 successful answer. Next session: record token usage.
+
+## Progress
+
+Reported run: 6/6, average 3.92 seconds, slowest 6.84 seconds. Review found the
+timer started outside the loop, so these timings are not a verified per-ticket
+baseline. The timer placement in `evaluate.py` was corrected.
+
+Completed rerun (reported by the learner): **6/6, average 1.31 seconds, slowest
+1.91 seconds**. Use this as the initial per-ticket timing baseline. The earlier
+cumulative measurements are not comparable to it.
+
+Next: [Day 6 — inspect token usage](day-06.md).

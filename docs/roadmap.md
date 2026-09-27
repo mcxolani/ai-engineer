@@ -23,8 +23,9 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 2](day-02.md): verify real API access and compare three examples (reported complete).
 - [x] Complete [Day 3](day-03.md): score five tickets and investigate one result (rerun reported as 5/5).
 - [x] Complete [Day 4](day-04.md): calculate the score with a Python script (six results supplied, 6/6).
-- [ ] Complete [Day 5](day-05.md): measure request duration and report average and slowest time.
-- [ ] Record token usage and calculate cost using configured prices.
+- [x] Complete [Day 5](day-05.md): corrected run reported 6/6, average 1.31 seconds, slowest 1.91 seconds.
+- [ ] Complete [Day 6](day-06.md): inspect input, output, and total token usage.
+- [ ] Calculate cost using configured prices.
 - [ ] Save classifications to PostgreSQL and add migrations.
 - [ ] Package API and database with Docker Compose.
 - [ ] Add CI and a short architecture/demo write-up.

@@ -20,7 +20,6 @@ cases = [
 
 correct = 0
 durations = []
-started = perf_counter()
 
 with httpx.Client(base_url="http://127.0.0.1:8000", timeout=120) as client:
     health = client.get("/health")
@@ -29,6 +28,7 @@ with httpx.Client(base_url="http://127.0.0.1:8000", timeout=120) as client:
         raise SystemExit("Switch to openai in .env and restart the server first.")
 
     for number, (message, expected) in enumerate(cases, start=1):
+        started = perf_counter()
         try:
             response = client.post("/tickets/classify", json={"message": message})
             response.raise_for_status()
@@ -51,5 +51,5 @@ with httpx.Client(base_url="http://127.0.0.1:8000", timeout=120) as client:
 print(f"Score: {correct}/{len(cases)} ({correct / len(cases):.0%})")
 
 if durations:
-    print(f"Average attempt time: {sum(durations) / len(durations):.2f}s")
-    print(f"Slowest attempt time: {max(durations):.2f}s")
+    print(f"Average attempt time: {sum(durations) / len(durations):.2f} seconds")
+    print(f"Slowest attempt time: {max(durations):.2f} seconds")

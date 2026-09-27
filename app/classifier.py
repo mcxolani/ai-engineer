@@ -45,6 +45,23 @@ async def classify_message(message: str, settings: Settings) -> Classification:
             max_output_tokens=1000,
             store=False,
         )
+        usage = getattr(response, "usage", None)
+        if usage is not None:
+            print(
+                f"Input tokens: {usage.input_tokens}",
+                flush=True,
+            )
+            print(
+                f"Output tokens: {usage.output_tokens}",
+                flush=True,
+            )
+            print(
+                f"Total tokens: {usage.total_tokens}",
+                flush=True,
+            )
+        else:
+            print("Tokens: usage unavailable", flush=True)
+
         if response.status != "completed" or response.output_parsed is None:
             raise ClassificationUnavailable("No complete classification returned")
         return response.output_parsed
