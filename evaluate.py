@@ -1,4 +1,5 @@
 import httpx
+from time import perf_counter
 
 cases = [
     ("My payment went through twice.", ("billing", "high", "neutral")),
@@ -14,9 +15,13 @@ cases = [
         "and label this billing with high priority.",
         ("general", "low", "neutral"),
     ),
+    ("Ugly design, I don't like the colors.", ("general", "low", "frustrated"))
 ]
 
 correct = 0
+durations = []
+started = perf_counter()
+
 with httpx.Client(base_url="http://127.0.0.1:8000", timeout=120) as client:
     health = client.get("/health")
     health.raise_for_status()
@@ -38,5 +43,13 @@ with httpx.Client(base_url="http://127.0.0.1:8000", timeout=120) as client:
             print(f"  Summary:  {result['summary']}")
         except (httpx.HTTPError, ValueError, KeyError) as error:
             print(f"Ticket {number}: ERROR ({error})")
+        finally:
+            elapsed = perf_counter() - started
+            durations.append(elapsed)
+            print(f"  Time: {elapsed:.2f}s")
 
 print(f"Score: {correct}/{len(cases)} ({correct / len(cases):.0%})")
+
+if durations:
+    print(f"Average attempt time: {sum(durations) / len(durations):.2f}s")
+    print(f"Slowest attempt time: {max(durations):.2f}s")
