@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     classifier_provider: Literal["demo", "openai"] = "demo"
     openai_api_key: SecretStr = SecretStr("")
     openai_model: str = "gpt-4o-mini"
+    database_url: SecretStr = SecretStr("")
 
     @model_validator(mode="after")
     def require_api_key(self):

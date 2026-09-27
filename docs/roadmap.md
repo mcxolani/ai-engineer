@@ -27,7 +27,8 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 6](day-06.md): reported 6/6; example usage 277 input + 29 output = 306 tokens.
 - [x] Complete [Day 7](day-07.md): all four cost calculations correct; explained the unchanged input cost.
 - [x] Complete [Day 8](day-08.md): healthy database; row 1 read back as billing and survived a restart.
-- [ ] Complete [Day 9](day-09.md): save an API classification from a Python script.
+- [x] Complete [Day 9](day-09.md): payment row 2 read back as billing; login row 3 as account.
+- [ ] Complete [Day 10](day-10.md): save inside the API and return the saved ID in a header.
 - [ ] Save classifications to PostgreSQL and add migrations.
 - [ ] Package API and database with Docker Compose.
 - [ ] Add CI and a short architecture/demo write-up.

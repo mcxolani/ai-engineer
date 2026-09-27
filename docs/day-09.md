@@ -119,3 +119,9 @@ Login category read back: __
 ```
 
 Next session: move saving into the API so clients only need to send a ticket.
+
+Completed: payment row 2 read back as `billing`; login row 3 as `account`.
+
+Next: [Day 10 — let the API save](day-10.md). After implementing it, retire this
+lesson's `save_ticket.py`: the API will save the row, so the script's extra INSERT
+would create a duplicate.

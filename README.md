@@ -38,10 +38,10 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Days 1–8 are complete. Next: [Day 9 — save from Python](docs/day-09.md) (20–30 minutes).
+Days 1–9 are complete. Next: [Day 10 — let the API save](docs/day-10.md) (30–40 minutes).
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
-[Day 7](docs/day-07.md), and [Day 8](docs/day-08.md)
+[Day 7](docs/day-07.md), [Day 8](docs/day-08.md), and [Day 9](docs/day-09.md)
 are available for reference.
 
 ## Later: turn on AI

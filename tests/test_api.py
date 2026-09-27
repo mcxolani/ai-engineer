@@ -106,4 +106,27 @@ def test_live_adapter_passes_ticket_as_data_and_returns_parsed_output(monkeypatc
 
 def test_live_mode_requires_credentials():
     with pytest.raises(ValueError, match="Set OPENAI_API_KEY"):
-        Settings(_env_file=None, classifier_provider="openai", openai_api_key="")
+        Settings(_env_file=None, classifier_provider="openai", openai_api_key="", database_url="")
+
+@pytest.mark.parametrize("fails", [False, True])
+def test_api_saving(client, monkeypatch, fails):
+    import psycopg
+    from pydantic import SecretStr
+
+    main.settings.database_url = SecretStr("postgresql://unused-in-test")
+    save = AsyncMock(return_value=42)
+    if fails:
+        save.side_effect = psycopg.OperationalError("private database details")
+    monkeypatch.setattr(main, "save_classification", save)
+
+    response = client.post("/tickets/classify", json={"message": "Duplicate payment"})
+    save.assert_awaited_once()
+    assert save.call_args.args[1] == "Duplicate payment"
+    if fails:
+        assert response.status_code == 503
+        assert response.json() == {"detail": "Could not save the classification"}
+        assert "X-Classification-ID" not in response.headers
+    else:
+        assert response.status_code == 200
+        assert response.headers["X-Classification-ID"] == "42"
+        assert response.json() == save.call_args.args[2].model_dump()
