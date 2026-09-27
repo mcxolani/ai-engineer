@@ -107,3 +107,9 @@ Row still present after restart: yes/no
 ```
 
 Next session: connect Python to this database and save a classification from code.
+
+Completed: database reported healthy, row ID 1 read back with category `billing`,
+and the row remained after restart. This workspace uses `compose.yml`, which
+Docker Compose also recognises; keep using that file.
+
+Next: [Day 9 — save from Python](day-09.md).

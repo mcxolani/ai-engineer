@@ -26,7 +26,8 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 5](day-05.md): corrected run reported 6/6, average 1.31 seconds, slowest 1.91 seconds.
 - [x] Complete [Day 6](day-06.md): reported 6/6; example usage 277 input + 29 output = 306 tokens.
 - [x] Complete [Day 7](day-07.md): all four cost calculations correct; explained the unchanged input cost.
-- [ ] Complete [Day 8](day-08.md): start PostgreSQL and save one sample classification.
+- [x] Complete [Day 8](day-08.md): healthy database; row 1 read back as billing and survived a restart.
+- [ ] Complete [Day 9](day-09.md): save an API classification from a Python script.
 - [ ] Save classifications to PostgreSQL and add migrations.
 - [ ] Package API and database with Docker Compose.
 - [ ] Add CI and a short architecture/demo write-up.
