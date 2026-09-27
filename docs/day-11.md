@@ -149,3 +149,8 @@ Invalid ID status: __
 ```
 
 Next session: make database setup repeatable with a schema migration.
+
+Completed: 18 tests passed; `GET /tickets/4` returned 200 with category `technical`,
+the missing ID returned 404, and the invalid ID returned 422.
+
+Next: [Day 12 — make database setup repeatable](day-12.md).
