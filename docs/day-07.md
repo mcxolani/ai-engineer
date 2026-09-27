@@ -75,3 +75,10 @@ Why the total does not double: __
 You're done when you can explain the calculation without relying on the script.
 You now have a small set of quality, latency, usage, and cost measurements.
 Next session: begin saving classifications to PostgreSQL.
+
+Completed: all four calculations were correct: $0.00005895 for one ticket,
+$0.05895 for 1,000, $0.58950 for 10,000, and $0.00007635 with 58 output tokens.
+The input cost stays fixed while the output cost doubles, so the total does not
+double. Doubling both counts at unchanged rates would double the total.
+
+Next: [Day 8 — save a classification](day-08.md).
