@@ -1,0 +1,5 @@
+Support hours: The fictional ExampleCo support team is available Monday to Friday, from 09:00 to 17:00. Messages received outside those hours are reviewed on the next working day.
+
+Duplicate payments: If a customer reports a duplicate payment, the support team asks for the payment reference and checks the billing records before deciding what action to take.
+
+Account access: If a customer cannot sign in, the support team first suggests using the password reset link. If the problem continues, the team records the error message for investigation.

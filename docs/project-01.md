@@ -1,13 +1,12 @@
 # Support Ticket Classifier — project walkthrough
 
-Draft for the Day 15 exercise. Complete the three prompts below in your own words.
+Project 1 completed: walkthrough, README update, and save/read demo reported done.
 
 ## Problem
 
-Write two sentences describing who would use this service and what work it helps
-them do:
-
-> This is the support service that helps the support team to be able to classify tickets logged by users. It needs to be validated heavly so that it does not classify to wrong category or sentiment or priority. What I would improve is maybe getting all tickets by day or classification and even by date
+This service helps a support team classify tickets submitted by customers.
+It assigns a category, priority, and sentiment, and produces a short summary
+that the team can save and retrieve.
 
 ## How it works
 
@@ -30,10 +29,11 @@ configures it for the containerized service.
 Saved rows contain the message, classification JSON, ID, and creation time.
 A GET request reads the saved result without generating another answer.
 
-Explain why validation matters, and give an example of an answer that has valid
-fields but the wrong classification:
-
-> Your explanation here.
+Validation checks that the required fields exist and contain allowed values.
+It cannot guarantee that the classification is correct: a duplicate-payment
+message can be labeled `frustrated`, which is an allowed sentiment, even when
+the message expresses no frustration and should be `neutral`. Comparing results
+with labeled examples helps catch these mistakes.
 
 ## Evidence collected while building
 
@@ -58,9 +58,10 @@ classification succeeds and saving fails, model usage has still occurred. Usage
 is printed to the server terminal rather than stored as a billing record. The
 migration is a manually applied baseline; CI currently uses mocked dependencies.
 
-Choose one improvement and explain the concrete problem it would address:
-
-> Your explanation here.
+My next improvement would be listing saved tickets with filters for category
+and date. This would let a support team find related tickets without already
+knowing each ticket's ID. A paginated `GET /tickets` endpoint would keep each
+response manageable as the number of saved tickets grows.
 
 ## Run and demonstrate
 

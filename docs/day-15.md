@@ -72,3 +72,8 @@ One improvement I would make next: __
 
 After this, we will start Project 2: a document knowledge assistant, beginning
 with loading and splitting a small text document.
+
+Completed: walkthrough, README update, and save/read demo reported done.
+Chosen improvement: list saved tickets with filters.
+
+Next: [Day 16 — load and split a document](day-16.md).

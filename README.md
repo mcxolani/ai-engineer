@@ -1,6 +1,6 @@
 # Support Ticket Classifier
 
-This service classify customers tickets for support team
+This service classifies customer tickets for a support team.
 
 [Project walkthrough](docs/project-01.md)
 
@@ -43,12 +43,13 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Days 1–14 are complete. Next: [Day 15 — explain and demonstrate your project](docs/day-15.md) (20–30 minutes).
+Project 1 (Days 1–15) is complete. Next: [Day 16 — load and split a document](docs/day-16.md)
+(15–20 minutes), the first step toward a document knowledge assistant.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
 [Day 7](docs/day-07.md), [Day 8](docs/day-08.md), [Day 9](docs/day-09.md),
 [Day 10](docs/day-10.md), [Day 11](docs/day-11.md), [Day 12](docs/day-12.md),
-[Day 13](docs/day-13.md), and [Day 14](docs/day-14.md)
+[Day 13](docs/day-13.md), [Day 14](docs/day-14.md), and [Day 15](docs/day-15.md)
 are available for reference.
 
 ## Later: turn on AI

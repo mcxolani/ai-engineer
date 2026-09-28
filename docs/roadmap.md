@@ -33,7 +33,17 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 12](day-12.md): version 001 recorded once; ticket count stayed 4/4; practice table empty; saved ticket still returns 200.
 - [x] Complete [Day 13](day-13.md): both containers healthy; ticket 4 returned 200/technical before and after API restart.
 - [x] Complete [Day 14](day-14.md): lint and 18 tests passed locally; GitHub Actions lint and tests reported passing.
-- [ ] Complete [Day 15](day-15.md): finish the project walkthrough and demonstrate a save/read flow.
+- [x] Complete [Day 15](day-15.md): walkthrough, README update, and save/read demonstration reported complete.
+
+### Project 1 backlog
+
+- [ ] List saved tickets through `GET /tickets`, with category and date filters
+  and pagination. Selected as the next improvement during the walkthrough.
+
+## Project 2 increments
+
+- [ ] Complete [Day 16](day-16.md): load a text document and split it into
+  paragraphs, keeping the source filename and a chunk ID with each piece.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
