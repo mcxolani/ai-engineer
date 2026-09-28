@@ -85,3 +85,9 @@ First five numbers printed: yes/no
 Input tokens: __
 What does dimensions mean: __
 ```
+
+Completed: reported `text-embedding-3-small`, 1,536 dimensions, first five
+values printed, and 8 input tokens. Correctly explained dimensions as the
+number of values in the vector.
+
+Next: [Day 20 — compare embeddings](day-20.md).
