@@ -69,3 +69,9 @@ Chunks: __
 Chunk for the sign-in question: __
 Why keep the source filename: __
 ```
+
+Completed: reported three chunks from `sample-policy.txt`, correctly selected
+chunk 3 for the sign-in question, and explained that the filename identifies
+where the answer came from.
+
+Next: [Day 17 — find a chunk with keywords](day-17.md).
