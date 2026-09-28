@@ -123,3 +123,10 @@ Top chunk for banana: __
 Does that chunk answer banana: yes/no
 Why does banana still get a result: __
 ```
+
+Completed: reported four vectors for `login`, with chunk 3 ranked first at
+0.3423 and source `sample-policy.txt`. `banana` ranked chunk 2 first despite
+having no relevant answer. Correctly identified that ranking always picks a
+candidate, even when its score is low.
+
+Next: [Day 22 — allow a no-match result](day-22.md).

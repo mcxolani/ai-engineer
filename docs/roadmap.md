@@ -52,8 +52,10 @@ The schedule can stretch around your available time.
   using `text-embedding-3-small`; correctly explained dimensions.
 - [x] Complete [Day 20](day-20.md): reported similarities 1, 0.6345, and 0.2302;
   correctly identified related wording and distinguished similarity from confidence.
-- [ ] Complete [Day 21](day-21.md): rank document chunks with embeddings for
-  `login`, then inspect what happens with an unrelated query.
+- [x] Complete [Day 21](day-21.md): reported `login` retrieving chunk 3 at 0.3423;
+  `banana` retrieved irrelevant chunk 2, revealing the need for a no-match rule.
+- [ ] Complete [Day 22](day-22.md): add a trial minimum similarity score and
+  record accepted and rejected results for three searches.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

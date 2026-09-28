@@ -43,8 +43,18 @@ print(f"Vectors returned: {len(vectors)}")
 for score, chunk in ranked:
     print(f"Chunk {chunk['id']}: {score:.4f} | {chunk['source']}")
 
+minimum_score = 0.30
 best_score, best_chunk = ranked[0]
-print(f"\nTop chunk: {best_chunk['id']}")
-print(f"Source: {best_chunk['source']}")
-print(best_chunk["text"])
+
+print(f"\nTop candidate: {best_chunk['id']}")
+print(f"Top score: {best_score:.4f}")
+print(f"Minimum score: {minimum_score:.2f}")
+
+if best_score >= minimum_score:
+    print(f"Result: accepted chunk {best_chunk['id']}")
+    print(f"Source: {best_chunk['source']}")
+    print(best_chunk["text"])
+else:
+    print("Result: no match above the minimum score.")
+
 print(f"Input tokens: {response.usage.prompt_tokens}")
