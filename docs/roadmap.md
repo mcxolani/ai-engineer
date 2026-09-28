@@ -50,8 +50,10 @@ The schedule can stretch around your available time.
   with `login` returning `None` instead of chunk 3. Clarified whole-word matching.
 - [x] Complete [Day 19](day-19.md): reported 1,536 dimensions and 8 input tokens
   using `text-embedding-3-small`; correctly explained dimensions.
-- [ ] Complete [Day 20](day-20.md): compare three embeddings using cosine
-  similarity and explain what the scores mean.
+- [x] Complete [Day 20](day-20.md): reported similarities 1, 0.6345, and 0.2302;
+  correctly identified related wording and distinguished similarity from confidence.
+- [ ] Complete [Day 21](day-21.md): rank document chunks with embeddings for
+  `login`, then inspect what happens with an unrelated query.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

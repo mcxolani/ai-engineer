@@ -101,3 +101,9 @@ login / banana: __
 Which phrase is closer to login: __
 Does a score of 0.7 mean 70% confidence: __
 ```
+
+Completed: three vectors returned; reported similarities of 1 for `login / login`,
+0.6345 for `login / sign in`, and 0.2302 for `login / banana`. Correctly selected
+`sign in` and explained that similarity is not a confidence percentage.
+
+Next: [Day 21 — search your document with embeddings](day-21.md).
