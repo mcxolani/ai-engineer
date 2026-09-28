@@ -94,3 +94,9 @@ support hours → chunk: __
 banana → result: __
 Why does login find no match: __
 ```
+
+Completed: all four search results reported correctly. Clarification: this
+search matches whole words, not individual characters. `login` does not appear
+in the document, which uses the phrase `sign in`.
+
+Next: [Day 18 — score your search results](day-18.md).

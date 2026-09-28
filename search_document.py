@@ -14,21 +14,28 @@ chunks = [
     for number, paragraph in enumerate(paragraphs, start=1)
 ]
 
-query = input("Search keywords: ")
-query_words = words(query)
-best_chunk = None
-best_score = 0
+def find_chunk(query):
+    query_words = words(query)
+    best_chunk = None
+    best_score = 0
 
-for chunk in chunks:
-    score = len(query_words & words(chunk["text"]))
-    if score > best_score:
-        best_chunk = chunk
-        best_score = score
+    for chunk in chunks:
+        score = len(query_words & words(chunk["text"]))
+        if score > best_score:
+            best_chunk = chunk
+            best_score = score
 
-if best_chunk is None:
-    print("No matching chunk found.")
-else:
-    print(f"Source: {best_chunk['source']}")
-    print(f"Chunk: {best_chunk['id']}")
-    print(f"Matching words: {best_score}")
-    print(best_chunk["text"])
+    return best_chunk, best_score
+
+
+if __name__ == "__main__":
+    query = input("Search keywords: ")
+    best_chunk, best_score = find_chunk(query)
+
+    if best_chunk is None:
+        print("No matching chunk found.")
+    else:
+        print(f"Source: {best_chunk['source']}")
+        print(f"Chunk: {best_chunk['id']}")
+        print(f"Matching words: {best_score}")
+        print(best_chunk["text"])

@@ -44,8 +44,10 @@ The schedule can stretch around your available time.
 
 - [x] Complete [Day 16](day-16.md): reported three chunks from `sample-policy.txt`,
   correctly selected chunk 3 for sign-in, and explained source tracking.
-- [ ] Complete [Day 17](day-17.md): retrieve a chunk using keyword overlap and
-  handle a search with no matching words.
+- [x] Complete [Day 17](day-17.md): reported correct results for three keyword
+  searches and the no-match case; clarified whole-word matching.
+- [ ] Complete [Day 18](day-18.md): run a five-case retrieval evaluation and
+  explain the search's failure to match a related phrase.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
