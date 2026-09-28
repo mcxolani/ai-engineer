@@ -108,3 +108,9 @@ Failed query: __
 Expected chunk / actual chunk: __ / __
 Why it failed: __
 ```
+
+Completed: interactive search reported working; evaluation scored 4/5.
+The failed query was `login`, with expected chunk 3 and actual result `None`.
+The search compares whole words: `login` does not match `sign` or `in`.
+
+Next: [Day 19 — create your first embedding](day-19.md).

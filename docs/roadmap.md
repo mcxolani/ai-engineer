@@ -46,8 +46,10 @@ The schedule can stretch around your available time.
   correctly selected chunk 3 for sign-in, and explained source tracking.
 - [x] Complete [Day 17](day-17.md): reported correct results for three keyword
   searches and the no-match case; clarified whole-word matching.
-- [ ] Complete [Day 18](day-18.md): run a five-case retrieval evaluation and
-  explain the search's failure to match a related phrase.
+- [x] Complete [Day 18](day-18.md): interactive search works; reported 4/5,
+  with `login` returning `None` instead of chunk 3. Clarified whole-word matching.
+- [ ] Complete [Day 19](day-19.md): create one embedding and distinguish its
+  dimensions from the input token count.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
