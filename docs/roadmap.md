@@ -61,8 +61,11 @@ The schedule can stretch around your available time.
   after restarting. Explained the reduction in input tokens.
 - [x] Complete [Day 24](day-24.md): reported 5/5 and 8 query input tokens,
   improving on the keyword baseline's 4/5; import safe and dataset limits understood.
-- [ ] Complete [Day 25](day-25.md): generate an answer from a retrieved passage,
-  display its source, and inspect unsupported questions.
+- [x] Complete [Day 25](day-25.md): source shown for password guidance; `banana`
+  skipped generation; expiry question scored 0.3743 and generation correctly
+  reported missing information. Recorded an unsupported addition in the password answer.
+- [ ] Complete [Day 26](day-26.md): manually score answers to four new questions,
+  recording source support and appropriate handling of missing information.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

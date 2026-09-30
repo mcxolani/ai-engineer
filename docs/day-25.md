@@ -132,3 +132,14 @@ Reset-link expiry answer: __
 Expiry question generation completed or skipped: __
 Why can a relevant passage still fail to answer a question: __
 ```
+
+Completed: password-reset guidance returned with `sample-policy.txt` chunk 3,
+and `banana` skipped generation. The corrected expiry result scored 0.3743,
+completed generation, and said the passage did not provide enough information.
+Correctly explained that a related passage may lack the requested detail.
+
+Quality finding: the password answer added "provided by the support team".
+The passage says the team suggests using the link, but does not say who provides
+it. Record this as an unsupported addition, even though the main advice is correct.
+
+Next: [Day 26 — check answer quality](day-26.md).
