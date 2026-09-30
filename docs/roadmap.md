@@ -67,8 +67,11 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 26](day-26.md): recorded answers reviewed as 4/4, with no
   unsupported additions. Both missing-information cases completed generation
   and correctly declined to supply an answer.
-- [ ] Complete [Day 27](day-27.md): return answer data from a reusable function
-  and display the same result as JSON in the command-line script.
+- [x] Complete [Day 27](day-27.md): reported safe import, supported hours answer
+  with source/chunk metadata, and null source/chunk with zero generation tokens
+  for `banana`. Explained reuse by API callers.
+- [ ] Complete [Day 28](day-28.md): serve the knowledge assistant through
+  `POST /ask`, with typed request/response data and invalid-input rejection.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

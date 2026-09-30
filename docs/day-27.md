@@ -113,3 +113,10 @@ banana source / chunk / generation: __ / __ / __
 banana generation input / output tokens: __ / __
 Why return a dictionary instead of only printing: __
 ```
+
+Completed: import reported safe. The hours response contained supported hours
+and next-working-day guidance, source `sample-policy.txt`, chunk 1, and completed
+generation. `banana` returned null source/chunk, skipped generation, and zero
+generation tokens. Correctly explained that other callers can reuse the result.
+
+Next: [Day 28 — add a question API](day-28.md).

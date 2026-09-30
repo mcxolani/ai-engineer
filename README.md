@@ -43,8 +43,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Project 1 (Days 1–15) and Days 16–26 are complete.
-Next: [Day 27 — return answers as data](docs/day-27.md) (20–25 minutes),
+Project 1 (Days 1–15) and Days 16–27 are complete.
+Next: [Day 28 — add a question API](docs/day-28.md) (25–30 minutes),
 building toward a document knowledge assistant.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
@@ -54,7 +54,7 @@ building toward a document knowledge assistant.
 [Day 16](docs/day-16.md), [Day 17](docs/day-17.md), [Day 18](docs/day-18.md),
 [Day 19](docs/day-19.md), [Day 20](docs/day-20.md), [Day 21](docs/day-21.md),
 [Day 22](docs/day-22.md), [Day 23](docs/day-23.md), [Day 24](docs/day-24.md),
-[Day 25](docs/day-25.md), and [Day 26](docs/day-26.md)
+[Day 25](docs/day-25.md), [Day 26](docs/day-26.md), and [Day 27](docs/day-27.md)
 are available for reference.
 
 ## Later: turn on AI
