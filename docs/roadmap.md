@@ -56,8 +56,13 @@ The schedule can stretch around your available time.
   `banana` retrieved irrelevant chunk 2, revealing the need for a no-match rule.
 - [x] Complete [Day 22](day-22.md): trial minimum 0.30 accepted `login` at 0.3423
   and `support hours` at 0.5717; rejected `banana` at 0.0620. Explained the tradeoff.
-- [ ] Complete [Day 23](day-23.md): save document embeddings to JSON and reuse
-  them across searches, embedding only the query on each search.
+- [x] Complete [Day 23](day-23.md): reported three saved 1,536-value vectors,
+  one query vector per search, correct `login` result, and no match for `banana`
+  after restarting. Explained the reduction in input tokens.
+- [x] Complete [Day 24](day-24.md): reported 5/5 and 8 query input tokens,
+  improving on the keyword baseline's 4/5; import safe and dataset limits understood.
+- [ ] Complete [Day 25](day-25.md): generate an answer from a retrieved passage,
+  display its source, and inspect unsupported questions.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

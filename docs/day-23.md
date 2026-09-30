@@ -147,3 +147,10 @@ login result: __
 banana result after restarting the script: __
 Why does search use fewer input tokens now: __
 ```
+
+Completed: reported three saved chunks with 1,536 dimensions each, three chunks
+loaded during search, and one returned query vector. `login` selected chunk 3;
+`banana` returned no match after restarting. Correctly explained that only the
+query is now embedded during search.
+
+Next: [Day 24 — evaluate the embedding search](day-24.md).
