@@ -1,6 +1,7 @@
 # Answer quality evaluation — Day 26
 
-Status: pending learner runs. Record the first answer from each case.
+Status: completed. The four recorded answers were reviewed against the sample
+document and satisfy the rubric: 4/4, with no unsupported additions found.
 Use the rubric in [Day 26](day-26.md) and the
 [sample document](../documents/sample-policy.txt).
 
@@ -74,3 +75,7 @@ Answer quality score: 4/4
 Unsupported details found: 0
 
 Why can retrieval pass while the answer fails: because we expect it not to invent random answers
+
+Clarification: retrieval selects a relevant passage, but the generation step can
+still invent details, misread the passage, or omit information needed to answer.
+We therefore check retrieval and answer quality separately.

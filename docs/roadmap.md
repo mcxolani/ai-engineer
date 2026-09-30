@@ -64,8 +64,11 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 25](day-25.md): source shown for password guidance; `banana`
   skipped generation; expiry question scored 0.3743 and generation correctly
   reported missing information. Recorded an unsupported addition in the password answer.
-- [ ] Complete [Day 26](day-26.md): manually score answers to four new questions,
-  recording source support and appropriate handling of missing information.
+- [x] Complete [Day 26](day-26.md): recorded answers reviewed as 4/4, with no
+  unsupported additions. Both missing-information cases completed generation
+  and correctly declined to supply an answer.
+- [ ] Complete [Day 27](day-27.md): return answer data from a reusable function
+  and display the same result as JSON in the command-line script.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

@@ -71,3 +71,10 @@ Case 4 — reset URL: PASS/FAIL
 Unsupported details found: __
 Why can retrieval pass while the answer fails: __
 ```
+
+Completed: all four answers recorded in [answer-evaluation.md](answer-evaluation.md)
+were reviewed against the source and passed. Support hours and payment reference
+were correct; refund timing and reset URL correctly reported missing information.
+No unsupported additions were found in these four answers.
+
+Next: [Day 27 — return answers as data](day-27.md).

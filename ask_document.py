@@ -12,17 +12,22 @@ Do not invent facts, URLs, deadlines, or extra steps.
 Keep the answer to one or two short sentences.
 """
 
-
-def main():
-    question = input("Question: ").strip()
+def answer_question(question):
+    question = question.strip()
     chunk, score, embedding_tokens = find_chunk(question)
-    print(f"Retrieval score: {score:.4f}")
-    print(f"Embedding input tokens: {embedding_tokens}")
+    result = {
+        "answer": "I couldn't find a suitable passage in the document.",
+        "source": None,
+        "chunk_id": None,
+        "retrieval_score": score,
+        "generation": "skipped",
+        "embedding_input_tokens": embedding_tokens,
+        "generation_input_tokens": 0,
+        "generation_output_tokens": 0,
+    }
 
     if chunk is None:
-        print("Answer: I couldn't find a suitable passage in the document.")
-        print("Generation: skipped")
-        return
+        return result
 
     with OpenAI(timeout=20.0, max_retries=0) as client:
         response = client.responses.create(
@@ -36,12 +41,21 @@ def main():
     if response.status != "completed" or not response.output_text.strip():
         raise RuntimeError("The model did not return a complete text answer.")
 
-    print(f"Answer: {response.output_text.strip()}")
-    print(f"Retrieved source: {chunk['source']} (chunk {chunk['id']})")
-    print("Generation: completed")
-    if response.usage is not None:
-        print(f"Generation input tokens: {response.usage.input_tokens}")
-        print(f"Generation output tokens: {response.usage.output_tokens}")
+    usage = response.usage
+    result.update(
+        answer=response.output_text.strip(),
+        source=chunk["source"],
+        chunk_id=chunk["id"],
+        generation="completed",
+        generation_input_tokens=usage.input_tokens if usage is not None else None,
+        generation_output_tokens=usage.output_tokens if usage is not None else None,
+    )
+    return result
+
+
+def main():
+    result = answer_question(input("Question: "))
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
