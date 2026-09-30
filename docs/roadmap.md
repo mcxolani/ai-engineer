@@ -70,8 +70,14 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 27](day-27.md): reported safe import, supported hours answer
   with source/chunk metadata, and null source/chunk with zero generation tokens
   for `banana`. Explained reuse by API callers.
-- [ ] Complete [Day 28](day-28.md): serve the knowledge assistant through
-  `POST /ask`, with typed request/response data and invalid-input rejection.
+- [x] Complete [Day 28](day-28.md): reported healthy API, supported hours response,
+  successful no-match response with skipped generation, and 422 for blank/missing
+  questions. Explained successful processing of a no-match request.
+- [x] Complete [Day 29](day-29.md): reported 12 knowledge API tests, 30 total tests,
+  and lint passing. Clarified that invalid input skips the helper and that fake
+  responses test API behavior without measuring real answer quality.
+- [ ] Complete [Day 30](day-30.md): start PostgreSQL with pgvector, calculate
+  example cosine similarities in SQL, and confirm the extension survives a restart.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

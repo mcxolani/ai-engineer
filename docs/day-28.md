@@ -138,3 +138,11 @@ Blank question status: __
 Missing question status: __
 Why does a no-match answer still return HTTP 200: __
 ```
+
+Completed: reported HTTP 200 for health and both valid questions. The hours
+response included `sample-policy.txt`, chunk 1, and completed generation;
+`banana` skipped generation. Blank and missing questions returned 422.
+Clarified that HTTP 200 means successful request processing, which can include
+a valid no-match result.
+
+Next: [Day 29 — test the question API](day-29.md).
