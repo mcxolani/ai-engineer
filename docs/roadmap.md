@@ -54,8 +54,10 @@ The schedule can stretch around your available time.
   correctly identified related wording and distinguished similarity from confidence.
 - [x] Complete [Day 21](day-21.md): reported `login` retrieving chunk 3 at 0.3423;
   `banana` retrieved irrelevant chunk 2, revealing the need for a no-match rule.
-- [ ] Complete [Day 22](day-22.md): add a trial minimum similarity score and
-  record accepted and rejected results for three searches.
+- [x] Complete [Day 22](day-22.md): trial minimum 0.30 accepted `login` at 0.3423
+  and `support hours` at 0.5717; rejected `banana` at 0.0620. Explained the tradeoff.
+- [ ] Complete [Day 23](day-23.md): save document embeddings to JSON and reuse
+  them across searches, embedding only the query on each search.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

@@ -43,8 +43,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Project 1 (Days 1–15) and Days 16–21 are complete.
-Next: [Day 22 — allow a no-match result](docs/day-22.md) (15–20 minutes),
+Project 1 (Days 1–15) and Days 16–22 are complete.
+Next: [Day 23 — save and reuse document embeddings](docs/day-23.md) (25–30 minutes),
 building toward a document knowledge assistant.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
@@ -52,7 +52,8 @@ building toward a document knowledge assistant.
 [Day 10](docs/day-10.md), [Day 11](docs/day-11.md), [Day 12](docs/day-12.md),
 [Day 13](docs/day-13.md), [Day 14](docs/day-14.md), [Day 15](docs/day-15.md),
 [Day 16](docs/day-16.md), [Day 17](docs/day-17.md), [Day 18](docs/day-18.md),
-[Day 19](docs/day-19.md), [Day 20](docs/day-20.md), and [Day 21](docs/day-21.md)
+[Day 19](docs/day-19.md), [Day 20](docs/day-20.md), [Day 21](docs/day-21.md),
+and [Day 22](docs/day-22.md)
 are available for reference.
 
 ## Later: turn on AI

@@ -81,3 +81,10 @@ banana → top score / result: __ / __
 support hours → top score / result: __ / __
 Why can raising the minimum reject a useful chunk: __
 ```
+
+Completed: with the trial minimum of 0.30, `login` scored 0.3423 and accepted
+chunk 3, `banana` scored 0.0620 and returned no match, and `support hours`
+scored 0.5717 and accepted chunk 1. Correctly explained that a higher minimum
+can reject useful chunks too. These are three development examples.
+
+Next: [Day 23 — save and reuse document embeddings](day-23.md).
