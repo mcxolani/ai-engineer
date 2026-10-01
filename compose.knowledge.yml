@@ -1,0 +1,21 @@
+name: ai-engineer-knowledge
+
+services:
+  vector-db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: knowledge_app
+      POSTGRES_PASSWORD: local_learning_only
+      POSTGRES_DB: knowledge
+    ports:
+      - "127.0.0.1:15433:5432"
+    volumes:
+      - knowledge_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U knowledge_app -d knowledge"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+volumes:
+  knowledge_data:
