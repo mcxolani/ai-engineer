@@ -119,3 +119,10 @@ Perpendicular similarity: __
 Extension still enabled after restart: yes/no
 Why do we subtract cosine distance from 1: __
 ```
+
+Completed: reported healthy database, similarities 1 and 0, and extension still
+enabled after restart. Confirmed extension name/version as `vector / 0.8.7`
+after distinguishing the PostgreSQL image tag from the extension version.
+Clarified the formula: cosine similarity equals 1 minus cosine distance.
+
+Next: [Day 31 — save your embeddings in PostgreSQL](day-31.md).

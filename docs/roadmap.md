@@ -76,8 +76,14 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 29](day-29.md): reported 12 knowledge API tests, 30 total tests,
   and lint passing. Clarified that invalid input skips the helper and that fake
   responses test API behavior without measuring real answer quality.
-- [ ] Complete [Day 30](day-30.md): start PostgreSQL with pgvector, calculate
-  example cosine similarities in SQL, and confirm the extension survives a restart.
+- [x] Complete [Day 30](day-30.md): reported healthy database, `vector / 0.8.7`,
+  example similarities 1 and 0, and extension enabled after restart. Clarified
+  extension version and the distance-to-similarity formula.
+- [x] Complete [Day 31](day-31.md): reported three rows after repeat import,
+  1,536 dimensions, correct model and chunk readback, and passing lint.
+  Explained the source/chunk key and clarified the update on conflict.
+- [ ] Complete [Day 32](day-32.md): retrieve chunks through PostgreSQL cosine
+  search, retain the no-match threshold, and run the five-question evaluation.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
