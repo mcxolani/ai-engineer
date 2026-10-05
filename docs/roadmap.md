@@ -82,8 +82,14 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 31](day-31.md): reported three rows after repeat import,
   1,536 dimensions, correct model and chunk readback, and passing lint.
   Explained the source/chunk key and clarified the update on conflict.
-- [ ] Complete [Day 32](day-32.md): retrieve chunks through PostgreSQL cosine
-  search, retain the no-match threshold, and run the five-question evaluation.
+- [x] Complete [Day 32](day-32.md): reported correct login/no-match results,
+  PostgreSQL retrieval 5/5, 8 input tokens, and passing lint. Clarified that
+  smaller cosine distance means greater similarity and comes first in ascending order.
+- [x] Complete [Day 33](day-33.md): reported 14 API tests, 32 total tests, lint,
+  supported hours answer, and skipped no-match generation. Verified database
+  failure returns 503 without calling models, correcting the reported 502.
+- [ ] Complete [Day 34](day-34.md): ingest a second text document, evaluate
+  source/chunk pairs, and answer questions from both files through `/ask`.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

@@ -1,11 +1,15 @@
 from unittest.mock import Mock
 
 import httpx
+import psycopg
 import pytest
 from fastapi.testclient import TestClient
 from openai import APITimeoutError
 
+import ask_document
 import knowledge_api
+import pgvector_search
+from pgvector_search import RetrievalUnavailable
 
 
 @pytest.fixture
@@ -76,9 +80,14 @@ def test_invalid_input_skips_answerer(client, answerer, body):
 
 @pytest.mark.parametrize("error,status,detail", [
     (
-        FileNotFoundError("private backend details"),
+        RetrievalUnavailable("private setup details"),
         503,
-        "Build the document index before asking questions",
+        "Document search is unavailable",
+    ),
+    (
+        psycopg.OperationalError("private connection details"),
+        503,
+        "Document search is unavailable",
     ),
     (
         APITimeoutError(request=httpx.Request("POST", "https://example.test")),
@@ -86,7 +95,7 @@ def test_invalid_input_skips_answerer(client, answerer, body):
         "The model provider timed out",
     ),
     (
-        RuntimeError("private backend details"),
+        RuntimeError("private provider details"),
         502,
         "The model provider could not return a usable answer",
     ),
@@ -97,10 +106,30 @@ def test_errors_have_safe_messages(client, answerer, error, status, detail):
     assert response.status_code == status
     assert response.json() == {"detail": detail}
     answerer.assert_called_once_with("support hours")
-
+    
 
 def test_invalid_helper_response_is_rejected(client, answerer):
     answerer.return_value["generation"] = "unknown"
     response = client.post("/ask", json={"question": "support hours"})
     assert response.status_code == 500
     answerer.assert_called_once_with("support hours")
+
+
+def test_database_failure_before_models(monkeypatch):
+    monkeypatch.setenv("KNOWLEDGE_DATABASE_URL", "postgresql://unused")
+    monkeypatch.setattr(pgvector_search, "load_dotenv", Mock())
+    connect = Mock(side_effect=psycopg.OperationalError("private connection details"))
+    monkeypatch.setattr(pgvector_search.psycopg, "connect", connect)
+
+    model_client = Mock(side_effect=AssertionError("A model must not be called"))
+    monkeypatch.setattr(pgvector_search, "OpenAI", model_client)
+    monkeypatch.setattr(ask_document, "OpenAI", model_client)
+    monkeypatch.setattr("semantic_search.OpenAI", model_client)
+
+    with TestClient(knowledge_api.app) as client:
+        response = client.post("/ask", json={"question": "support hours"})
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Document search is unavailable"}
+    connect.assert_called_once()
+    model_client.assert_not_called()

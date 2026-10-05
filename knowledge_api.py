@@ -1,10 +1,12 @@
 from typing import Literal
 
+import psycopg
 from fastapi import FastAPI, HTTPException
 from openai import APIError, APITimeoutError, RateLimitError
 from pydantic import BaseModel, ConfigDict, Field
 
 from ask_document import answer_question
+from pgvector_search import RetrievalUnavailable
 
 app = FastAPI(title="Document Knowledge Assistant")
 
@@ -37,11 +39,11 @@ def health():
 def ask(request: QuestionRequest):
     try:
         return answer_question(request.question)
+    except (psycopg.Error, RetrievalUnavailable) as exc:
+        raise HTTPException(503, "Document search is unavailable") from exc
     except APITimeoutError as exc:
         raise HTTPException(504, "The model provider timed out") from exc
     except RateLimitError as exc:
         raise HTTPException(503, "The model provider is temporarily unavailable") from exc
-    except FileNotFoundError as exc:
-        raise HTTPException(503, "Build the document index before asking questions") from exc
     except (APIError, RuntimeError) as exc:
         raise HTTPException(502, "The model provider could not return a usable answer") from exc
