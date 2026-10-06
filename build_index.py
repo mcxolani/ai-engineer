@@ -4,11 +4,15 @@ from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from search_document import chunks
+# from search_document import chunks
+from document_loader import load_chunks
 
 root = Path(__file__).resolve().parent
+chunks = load_chunks(root / "documents")
+
 load_dotenv(root / ".env")
 model = "text-embedding-3-small"
+
 
 if not chunks:
     raise SystemExit("The document has no chunks to embed.")
