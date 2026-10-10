@@ -2,7 +2,7 @@
 
 This service classifies customer tickets for a support team.
 
-[Project walkthrough](docs/project-01.md)
+[Project 1 walkthrough](docs/project-01.md) · [Knowledge assistant walkthrough](docs/project-02.md)
 
 
 Our first project accepts a customer message and returns a category, priority,
@@ -43,8 +43,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Project 1 (Days 1–15) and Days 16–33 are complete.
-Next: [Day 34 — answer questions from two documents](docs/day-34.md) (30–40 minutes),
+Project 1 (Days 1–15) and Days 16–36 are complete.
+Next: [Day 37 — test the importer's checks](docs/day-37.md) (25–30 minutes),
 building toward a document knowledge assistant.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
@@ -56,7 +56,8 @@ building toward a document knowledge assistant.
 [Day 22](docs/day-22.md), [Day 23](docs/day-23.md), [Day 24](docs/day-24.md),
 [Day 25](docs/day-25.md), [Day 26](docs/day-26.md), [Day 27](docs/day-27.md),
 [Day 28](docs/day-28.md), [Day 29](docs/day-29.md), [Day 30](docs/day-30.md),
-[Day 31](docs/day-31.md), [Day 32](docs/day-32.md), and [Day 33](docs/day-33.md)
+[Day 31](docs/day-31.md), [Day 32](docs/day-32.md), [Day 33](docs/day-33.md),
+[Day 34](docs/day-34.md), [Day 35](docs/day-35.md), and [Day 36](docs/day-36.md)
 are available for reference.
 
 ## Later: turn on AI
@@ -89,6 +90,33 @@ docker compose up -d --build --wait api
 docker compose ps
 ```
 
+## Knowledge assistant
+
+This project splits `.txt` files in `documents/` into paragraph chunks, embeds
+them, and stores their source, chunk number, text, model name, and vector in
+PostgreSQL with pgvector. `(source, chunk_id)` identifies each row.
+
+`POST /ask` checks that stored chunks exist for the embedding model, embeds the
+question, and retrieves the row with the smallest cosine distance. If its
+similarity meets the `0.30` minimum, the assistant generates an answer using that
+passage. Otherwise, it returns no match and skips generation. Expected database
+and provider failures return explicit errors. Live questions incur model usage.
+
+The retrieval evaluation compares expected source/chunk pairs with the retrieved
+pairs. The latest reported result is **6/6 on six development queries**; it does
+not establish accuracy on all future questions.
+
+See the [project walkthrough](docs/project-02.md), [database setup](docs/day-31.md),
+and [document build/import instructions](docs/day-34.md). Set `OPENAI_API_KEY` and
+`KNOWLEDGE_DATABASE_URL` in `.env`. After setup and import, start the service with:
+
+```bash
+source .venv/bin/activate
+docker compose -f compose.knowledge.yml up -d --wait vector-db
+uvicorn knowledge_api:app --host 127.0.0.1 --port 8001 --reload
+```
+
+Open <http://127.0.0.1:8001/docs> to submit a question.
 
 Checks: `pytest -q` and `ruff check .`. Tests make no paid API calls.
 

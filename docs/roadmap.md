@@ -88,8 +88,16 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 33](day-33.md): reported 14 API tests, 32 total tests, lint,
   supported hours answer, and skipped no-match generation. Verified database
   failure returns 503 without calling models, correcting the reported 502.
-- [ ] Complete [Day 34](day-34.md): ingest a second text document, evaluate
-  source/chunk pairs, and answer questions from both files through `/ask`.
+- [x] Complete [Day 34](day-34.md): reported two files, four chunks, retrieval
+  6/6, passing lint, and supported answers using both sources. Confirmed database
+  counts of one remote-work chunk and three sample-policy chunks.
+- [x] Complete [Day 35](day-35.md): reported walkthrough and README updates,
+  explained manual indexing, and selected cleanup of obsolete database chunks.
+- [x] Complete [Day 36](day-36.md): reported cleanup from six rows to four,
+  two obsolete rows removed, zero removed on repeat, both real chunk-1 rows
+  preserved, and passing lint. Correctly explained transaction rollback.
+- [ ] Complete [Day 37](day-37.md): test stale/incomplete cache rejection and
+  valid-cache progression using temporary files and a fake database connection.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

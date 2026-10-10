@@ -203,3 +203,12 @@ Hours source / chunk: __ / __
 Failed queries, if any: __
 Why is checking only the chunk number no longer enough: __
 ```
+
+Completed: reported two files, four chunks, retrieval 6/6, and passing lint.
+Remote-work returned 200 with a supported answer from `remote-work-policy.txt`,
+chunk 1; hours used `sample-policy.txt`, chunk 1. Correctly explained why chunk
+numbers alone are ambiguous. Direct database inspection confirmed one remote-work
+chunk and three sample-policy chunks; clarified that 2 counts sources, not chunks per file.
+With 6/6 passing, there were no failed evaluation queries.
+
+Next: [Day 35 — explain your knowledge assistant](day-35.md).
