@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 source = Path(__file__).resolve().parent / "documents" / "sample-policy.txt"
 text = source.read_text(encoding="utf-8")
 
