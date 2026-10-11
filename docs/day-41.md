@@ -168,3 +168,11 @@ Remote-work / sample-policy chunk counts: __ / __
 GET /sources after API restart: __
 Why does the container use vector-db:5432 instead of localhost:15433: __
 ```
+
+Completed: reported valid Compose configuration, healthy API and database
+containers, and 200 responses from `/health` and `/sources`. Source counts were
+1 and 3, and `/sources` still returned 200 after the API restart. Explained
+service-name addressing; clarified that Compose resolves `vector-db` to the
+database container and uses its internal port, 5432.
+
+Next: [Day 42 — check the knowledge container in CI](day-42.md).

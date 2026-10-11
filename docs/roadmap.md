@@ -108,8 +108,11 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 40](day-40.md): reported 24 API tests, 50 total tests, and
   passing lint. Listed one remote-work chunk and three sample-policy chunks;
   explained why the catalog reads indexed rows rather than local files.
-- [ ] Complete [Day 41](day-41.md): run the knowledge API with Compose, check
-  database access through `/sources`, and repeat after an API restart.
+- [x] Complete [Day 41](day-41.md): reported healthy API/database containers,
+  200 responses, correct source counts, and successful read after API restart.
+  Explained service-name addressing and the database's internal port.
+- [ ] Complete [Day 42](day-42.md): build the knowledge container in GitHub
+  Actions, apply the schema, and check HTTP responses against an empty database.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

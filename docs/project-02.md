@@ -1,7 +1,7 @@
 # Knowledge assistant — project walkthrough
 
-Working core, collection cleanup, optional source filtering, and the source
-catalog are complete through Day 40.
+Working core, collection cleanup, optional source filtering, source catalog,
+and the API container are complete through Day 41.
 
 ## Problem
 
@@ -76,6 +76,8 @@ whether that passage supports the answer.
 | [pgvector_search.py](../pgvector_search.py) | Embed a question, search, and apply the threshold |
 | [ask_document.py](../ask_document.py) | Generate from a matched passage or skip generation |
 | [knowledge_api.py](../knowledge_api.py) | Validate HTTP input/output and map errors |
+| [Dockerfile.knowledge](../Dockerfile.knowledge) | Build the knowledge API runtime image |
+| [compose.knowledge.yml](../compose.knowledge.yml) | Run the knowledge API and pgvector database |
 | [evaluate_postgres.py](../evaluate_postgres.py) | Compare retrieved source/chunk pairs with expected results |
 | [test_knowledge_api.py](../tests/test_knowledge_api.py) | Check API behavior using simulated dependencies |
 
@@ -94,6 +96,7 @@ whether that passage supports the answer.
 | Real rollback exercise | Day 38 reported old text retained after cleanup failure and restored on retry | Checked earlier upsert rollback in a separate practice database; verified final contents |
 | Source filtering | Day 39 reported the selected remote-work source and null score for an unknown source | Manual requests exercised selection and no-candidate behavior |
 | Source catalog | Day 40 reported 200 with chunk counts 1 and 3 | The endpoint reads both indexed sources from PostgreSQL |
+| Container run | Day 41 reported healthy containers, source counts 1 and 3, and successful read after API restart | The API container can reach the database and read indexed sources |
 
 Six development queries are too few to establish general retrieval accuracy.
 Automated API tests use simulated responses and do not measure real answer quality.
@@ -122,16 +125,20 @@ use [Day 34](day-34.md). Building embeddings incurs model usage; importing an
 existing cache does not. The local `.env` needs `OPENAI_API_KEY` and
 `KNOWLEDGE_DATABASE_URL`.
 
-Once setup and import are complete, run from the project root:
+Once setup and import are complete, stop any local Uvicorn process on port 8001
+and run from the project root:
 
 ```bash
-source .venv/bin/activate
-docker compose -f compose.knowledge.yml up -d --wait vector-db
-uvicorn knowledge_api:app --host 127.0.0.1 --port 8001 --reload
+docker compose -f compose.knowledge.yml up -d --build --wait
 ```
 
 Open <http://127.0.0.1:8001/docs>. Submitting valid questions can incur model
 usage. The classifier uses its own Compose file and port 8000.
+
+Compose supplies `vector-db:5432` as the API container's database address. Local
+build/import scripts still use `127.0.0.1:15433` from `.env`. The image contains
+the API code and dependencies; documents and the embedding cache stay on the
+host. Rebuild the API image after changing its Python code.
 
 ## Current limits and next improvement
 
@@ -151,4 +158,5 @@ The selected cleanup improvement was completed in [Day 36](day-36.md).
 connection. [Day 38](day-38.md) checked rollback with the real importer and a
 separate practice database. [Day 39](day-39.md) added optional source filtering.
 [Day 40](day-40.md) added discovery of available sources and their chunk counts.
-[Day 41](day-41.md) will run the knowledge API alongside its database in Compose.
+[Day 41](day-41.md) added the knowledge API to Compose alongside its database.
+[Day 42](day-42.md) will check the container and database together in GitHub Actions.
