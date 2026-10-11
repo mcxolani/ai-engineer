@@ -12,9 +12,9 @@ Do not invent facts, URLs, deadlines, or extra steps.
 Keep the answer to one or two short sentences.
 """
 
-def answer_question(question):
+def answer_question(question, source=None):
     question = question.strip()
-    chunk, score, embedding_tokens = find_chunk(question)
+    chunk, score, embedding_tokens = find_chunk(question, source=source)
     result = {
         "answer": "I couldn't find a suitable passage in the document.",
         "source": None,

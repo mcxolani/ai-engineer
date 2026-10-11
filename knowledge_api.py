@@ -15,6 +15,7 @@ class QuestionRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
     question: str = Field(min_length=1, max_length=2000)
+    source: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class AnswerResponse(BaseModel):
@@ -23,7 +24,7 @@ class AnswerResponse(BaseModel):
     answer: str = Field(min_length=1)
     source: str | None
     chunk_id: int | None = Field(gt=0)
-    retrieval_score: float
+    retrieval_score: float | None
     generation: Literal["completed", "skipped"]
     embedding_input_tokens: int = Field(ge=0)
     generation_input_tokens: int | None = Field(ge=0)
@@ -38,7 +39,7 @@ def health():
 @app.post("/ask", response_model=AnswerResponse)
 def ask(request: QuestionRequest):
     try:
-        return answer_question(request.question)
+        return answer_question(request.question, source=request.source)
     except (psycopg.Error, RetrievalUnavailable) as exc:
         raise HTTPException(503, "Document search is unavailable") from exc
     except APITimeoutError as exc:

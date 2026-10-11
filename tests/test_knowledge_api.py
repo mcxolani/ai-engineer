@@ -45,7 +45,7 @@ def test_answer_and_metadata(client, answerer):
     response = client.post("/ask", json={"question": "  support hours  "})
     assert response.status_code == 200
     assert response.json() == answerer.return_value
-    answerer.assert_called_once_with("support hours")
+    answerer.assert_called_once_with("support hours", source=None)
 
 
 def test_no_match_is_success(client, answerer):
@@ -62,7 +62,7 @@ def test_no_match_is_success(client, answerer):
     response = client.post("/ask", json={"question": "banana"})
     assert response.status_code == 200
     assert response.json() == answerer.return_value
-    answerer.assert_called_once_with("banana")
+    answerer.assert_called_once_with("banana", source=None)
 
 
 @pytest.mark.parametrize("body", [
@@ -105,14 +105,14 @@ def test_errors_have_safe_messages(client, answerer, error, status, detail):
     response = client.post("/ask", json={"question": "support hours"})
     assert response.status_code == status
     assert response.json() == {"detail": detail}
-    answerer.assert_called_once_with("support hours")
+    answerer.assert_called_once_with("support hours", source=None)
     
 
 def test_invalid_helper_response_is_rejected(client, answerer):
     answerer.return_value["generation"] = "unknown"
     response = client.post("/ask", json={"question": "support hours"})
     assert response.status_code == 500
-    answerer.assert_called_once_with("support hours")
+    answerer.assert_called_once_with("support hours", source=None)
 
 
 def test_database_failure_before_models(monkeypatch):
@@ -133,3 +133,35 @@ def test_database_failure_before_models(monkeypatch):
     assert response.json() == {"detail": "Document search is unavailable"}
     connect.assert_called_once()
     model_client.assert_not_called()
+
+@pytest.mark.parametrize("source", [" sample-policy.txt ", None])
+def test_source_filter_is_forwarded(client, answerer, source):
+    response = client.post("/ask", json={"question": "support hours", "source": source})
+    assert response.status_code == 200
+    expected_source = source.strip() if source is not None else None
+    answerer.assert_called_once_with("support hours", source=expected_source)
+
+
+@pytest.mark.parametrize("source", ["   ", 42, "x" * 256])
+def test_invalid_source_skips_answerer(client, answerer, source):
+    response = client.post("/ask", json={"question": "support hours", "source": source})
+    assert response.status_code == 422
+    answerer.assert_not_called()
+
+
+def test_no_candidates_returns_null_score(client, answerer):
+    answerer.return_value.update(
+        answer="I couldn't find a suitable passage in the document.",
+        source=None,
+        chunk_id=None,
+        retrieval_score=None,
+        generation="skipped",
+        generation_input_tokens=0,
+        generation_output_tokens=0,
+    )
+    response = client.post(
+        "/ask", json={"question": "support hours", "source": "missing-policy.txt"}
+    )
+    assert response.status_code == 200
+    assert response.json() == answerer.return_value
+    answerer.assert_called_once_with("support hours", source="missing-policy.txt")
