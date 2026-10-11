@@ -155,3 +155,11 @@ Current-cache test reached the fake connection: yes/no
 Project documents or cache changed by these tests: yes/no
 Why don't these tests prove transaction rollback: __
 ```
+
+Completed: reported eight importer tests, 40 total tests, and passing lint.
+Changed-document cases skipped the connection function; the current-cache case
+reached the fake connection. Correctly explained that PostgreSQL was not called.
+After clarification, confirmed that only temporary test files change, with no
+real project data deleted.
+
+Next: [Day 38 — prove rollback with PostgreSQL](day-38.md).

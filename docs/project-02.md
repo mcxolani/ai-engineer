@@ -79,6 +79,7 @@ whether that passage supports the answer.
 | Full test suite | Reported 32 passing on Day 33 | Classifier and knowledge API tests passed together |
 | Database failure | Dedicated test rerun passed with 503 and no model calls | A failed initial connection is not presented as no match |
 | Collection cleanup | Day 36 reported six rows reduced to four; repeat removed zero | Removed practice rows for an obsolete file and paragraph; retained both real chunk-1 pairs |
+| Import validation tests | Day 37 reported eight passing; 40 total tests | Reject stale/incomplete caches before a connection; use temporary files and a fake connection |
 
 Six development queries are too few to establish general retrieval accuracy.
 Automated API tests use simulated responses and do not measure real answer quality.
@@ -130,5 +131,6 @@ import, and imports should run one at a time. The threshold has only been tried
 on this small collection.
 
 The selected cleanup improvement was completed in [Day 36](day-36.md).
-[Day 37](day-37.md) adds automated checks for the validation that runs before
-the importer connects to the database.
+[Day 37](day-37.md) added automated checks for validation before a database
+connection. [Day 38](day-38.md) checks rollback with the real importer and a
+separate practice database.
