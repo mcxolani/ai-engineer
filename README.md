@@ -43,8 +43,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Project 1 (Days 1–15) and Days 16–37 are complete.
-Next: [Day 38 — prove rollback with PostgreSQL](docs/day-38.md) (25–30 minutes),
+Project 1 (Days 1–15) and Days 16–38 are complete.
+Next: [Day 39 — search within one source file](docs/day-39.md) (30–40 minutes),
 building toward a document knowledge assistant.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
@@ -58,7 +58,7 @@ building toward a document knowledge assistant.
 [Day 28](docs/day-28.md), [Day 29](docs/day-29.md), [Day 30](docs/day-30.md),
 [Day 31](docs/day-31.md), [Day 32](docs/day-32.md), [Day 33](docs/day-33.md),
 [Day 34](docs/day-34.md), [Day 35](docs/day-35.md), [Day 36](docs/day-36.md),
-and [Day 37](docs/day-37.md)
+[Day 37](docs/day-37.md), and [Day 38](docs/day-38.md)
 are available for reference.
 
 ## Later: turn on AI

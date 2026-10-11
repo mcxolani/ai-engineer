@@ -99,8 +99,11 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 37](day-37.md): reported eight importer tests, 40 total tests,
   and passing lint. Explained why fake connections cannot prove rollback and
   clarified that the changed files are temporary test data.
-- [ ] Complete [Day 38](day-38.md): force cleanup to fail in a practice database,
-  verify earlier updates roll back, then remove the failure and retry successfully.
+- [x] Complete [Day 38](day-38.md): reported expected failure, old text retained,
+  and successful retry restoring the passage. Clarified SQL count versus result-row
+  footer; verified four rows in both databases after completion.
+- [ ] Complete [Day 39](day-39.md): add an optional source filter to `/ask`,
+  apply it before ranking, and represent a search with no candidates using a null score.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

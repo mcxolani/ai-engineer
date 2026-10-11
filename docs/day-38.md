@@ -138,3 +138,13 @@ Support-hours text restored after retry: yes/no
 Main database count before / after: __ / __
 Why does retaining the old text prove more than retaining the row count: __
 ```
+
+Completed: expected cleanup failure and retained old text reported, followed by
+a successful retry restoring four rows and the support-hours passage. Clarified
+that the `(1 row)` footer describes the query output, not the stored count:
+the exercise counts are five before/after failure and four after retry, with
+the main database remaining at four. Direct inspection confirmed both databases
+currently have four correct source/chunk pairs. Explained why unchanged row
+counts alone cannot show whether content changes were rolled back.
+
+Next: [Day 39 — search within one source file](day-39.md).

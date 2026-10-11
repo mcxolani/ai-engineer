@@ -14,7 +14,7 @@ class RetrievalUnavailable(RuntimeError):
     """Document retrieval is not ready to serve questions."""
 
 
-def find_chunk(query):
+def find_chunk(query, source=None):
     query = query.strip()
     if not query:
         raise ValueError("Enter a search before requesting embeddings.")
@@ -49,14 +49,15 @@ def find_chunk(query):
                    1 - (embedding <=> %s::vector) AS score
             FROM document_chunks
             WHERE embedding_model = %s
+              AND (%s::text IS NULL OR source = %s)
             ORDER BY embedding <=> %s::vector, source, chunk_id
             LIMIT 1
             """,
-            (vector, EMBEDDING_MODEL, vector),
+            (vector, EMBEDDING_MODEL, source, source, vector),
         ).fetchone()
 
     if row is None:
-        raise RetrievalUnavailable("No chunks remain for this embedding model.")
+        return None, None, response.usage.prompt_tokens
 
     score = float(row["score"])
     chunk = {
@@ -70,7 +71,8 @@ def find_chunk(query):
 
 if __name__ == "__main__":
     chunk, score, tokens = find_chunk(input("Search: "))
-    print(f"Top score: {score:.4f}")
+    score_text = "none" if score is None else f"{score:.4f}"
+    print(f"Top score: {score_text}")
     print(f"Minimum score: {MINIMUM_SCORE:.2f}")
     if chunk is None:
         print("Result: no match above the minimum score.")
