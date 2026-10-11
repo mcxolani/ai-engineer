@@ -1,0 +1,57 @@
+name: Knowledge container checks
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENAI_API_KEY: ""
+      COMPOSE_PROJECT_NAME: knowledge-ci
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate Compose
+        run: docker compose -f compose.knowledge.yml config --quiet
+
+      - name: Build and start services
+        run: docker compose -f compose.knowledge.yml up -d --build --wait --wait-timeout 90
+
+      - name: Create database schema
+        run: |
+          docker compose -f compose.knowledge.yml exec -T vector-db \
+            psql -X -U knowledge_app -d knowledge \
+            --set=ON_ERROR_STOP=1 --single-transaction --file=- \
+            < migrations/knowledge/001_create_document_chunks.sql
+
+      - name: Check HTTP responses
+        run: |
+          python3 - <<'PY'
+          import json
+          import urllib.request
+
+          expected = {
+              "/health": {"status": "ok"},
+              "/sources": {"sources": []},
+          }
+          for path, body in expected.items():
+              with urllib.request.urlopen(
+                  f"http://127.0.0.1:8001{path}", timeout=5
+              ) as response:
+                  actual = json.load(response)
+                  assert response.status == 200, response.status
+                  assert actual == body, actual
+                  print(f"{path}: 200, {actual}")
+          PY
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose -f compose.knowledge.yml logs --no-color --tail=100
+
+      - name: Remove CI containers and volume
+        if: always()
+        run: docker compose -f compose.knowledge.yml down --volumes
