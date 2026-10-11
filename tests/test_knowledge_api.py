@@ -165,3 +165,37 @@ def test_no_candidates_returns_null_score(client, answerer):
     assert response.status_code == 200
     assert response.json() == answerer.return_value
     answerer.assert_called_once_with("support hours", source="missing-policy.txt")
+
+@pytest.mark.parametrize("rows", [
+    [
+        {"source": "remote-work-policy.txt", "chunk_count": 1},
+        {"source": "sample-policy.txt", "chunk_count": 3},
+    ],
+    [],
+])
+def test_sources_list(client, answerer, monkeypatch, rows):
+    reader = Mock(return_value=rows)
+    monkeypatch.setattr(knowledge_api, "list_sources", reader)
+
+    response = client.get("/sources")
+
+    assert response.status_code == 200
+    assert response.json() == {"sources": rows}
+    reader.assert_called_once_with()
+    answerer.assert_not_called()
+
+
+@pytest.mark.parametrize("error", [
+    psycopg.OperationalError("private connection details"),
+    RetrievalUnavailable("private setup details"),
+])
+def test_sources_failure(client, answerer, monkeypatch, error):
+    reader = Mock(side_effect=error)
+    monkeypatch.setattr(knowledge_api, "list_sources", reader)
+
+    response = client.get("/sources")
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Document search is unavailable"}
+    reader.assert_called_once_with()
+    answerer.assert_not_called()

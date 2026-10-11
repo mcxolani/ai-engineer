@@ -6,7 +6,7 @@ from openai import APIError, APITimeoutError, RateLimitError
 from pydantic import BaseModel, ConfigDict, Field
 
 from ask_document import answer_question
-from pgvector_search import RetrievalUnavailable
+from pgvector_search import RetrievalUnavailable, list_sources
 
 app = FastAPI(title="Document Knowledge Assistant")
 
@@ -30,6 +30,18 @@ class AnswerResponse(BaseModel):
     generation_input_tokens: int | None = Field(ge=0)
     generation_output_tokens: int | None = Field(ge=0)
 
+class SourceSummary(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source: str = Field(min_length=1)
+    chunk_count: int = Field(gt=0)
+
+
+class SourcesResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    sources: list[SourceSummary]
+
 
 @app.get("/health")
 def health():
@@ -48,3 +60,10 @@ def ask(request: QuestionRequest):
         raise HTTPException(503, "The model provider is temporarily unavailable") from exc
     except (APIError, RuntimeError) as exc:
         raise HTTPException(502, "The model provider could not return a usable answer") from exc
+
+@app.get("/sources", response_model=SourcesResponse)
+def sources():
+    try:
+        return {"sources": list_sources()}
+    except (psycopg.Error, RetrievalUnavailable) as exc:
+        raise HTTPException(503, "Document search is unavailable") from exc

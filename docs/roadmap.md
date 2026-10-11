@@ -102,8 +102,14 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 38](day-38.md): reported expected failure, old text retained,
   and successful retry restoring the passage. Clarified SQL count versus result-row
   footer; verified four rows in both databases after completion.
-- [ ] Complete [Day 39](day-39.md): add an optional source filter to `/ask`,
-  apply it before ranking, and represent a search with no candidates using a null score.
+- [x] Complete [Day 39](day-39.md): reported 20 API tests, 46 total tests, and
+  passing lint. Confirmed filtered and unfiltered sources, null score for an
+  unknown source, and why filtering precedes selection of the closest chunk.
+- [x] Complete [Day 40](day-40.md): reported 24 API tests, 50 total tests, and
+  passing lint. Listed one remote-work chunk and three sample-policy chunks;
+  explained why the catalog reads indexed rows rather than local files.
+- [ ] Complete [Day 41](day-41.md): run the knowledge API with Compose, check
+  database access through `/sources`, and repeat after an API restart.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

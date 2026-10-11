@@ -68,6 +68,29 @@ def find_chunk(query, source=None):
     accepted_chunk = chunk if score >= MINIMUM_SCORE else None
     return accepted_chunk, score, response.usage.prompt_tokens
 
+def list_sources():
+    root = Path(__file__).resolve().parent
+    load_dotenv(root / ".env")
+    database_url = os.getenv("KNOWLEDGE_DATABASE_URL")
+    if not database_url:
+        raise RetrievalUnavailable("Set KNOWLEDGE_DATABASE_URL in .env first.")
+
+    with psycopg.connect(
+        database_url, connect_timeout=5, row_factory=dict_row, autocommit=True
+    ) as connection:
+        rows = connection.execute(
+            """
+            SELECT source, count(*) AS chunk_count
+            FROM document_chunks
+            WHERE embedding_model = %s
+            GROUP BY source
+            ORDER BY source
+            """,
+            (EMBEDDING_MODEL,),
+        ).fetchall()
+
+    return rows
+
 
 if __name__ == "__main__":
     chunk, score, tokens = find_chunk(input("Search: "))

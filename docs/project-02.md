@@ -1,6 +1,7 @@
 # Knowledge assistant — project walkthrough
 
-Working core through Day 34. The Day 35 walkthrough and Day 36 cleanup improvement are complete.
+Working core, collection cleanup, optional source filtering, and the source
+catalog are complete through Day 40.
 
 ## Problem
 
@@ -35,11 +36,11 @@ current source/chunk pairs and removes obsolete pairs in one transaction.
 
 ```mermaid
 flowchart TD
-    A[POST /ask] --> B[Validate question]
+    A[POST /ask] --> B[Validate question and optional source]
     B --> C[Check database has chunks for the model]
     C --> D[Embed the question]
-    D --> E[Find closest chunk with SQL cosine distance]
-    E --> F{Similarity at least 0.30?}
+    D --> E[Filter by source if supplied; find closest chunk]
+    E --> F{Chunk exists and similarity at least 0.30?}
     F -->|No| G[Return no match; skip generation]
     F -->|Yes| H[Generate answer using the passage]
     H --> I[Return answer, source, chunk and usage]
@@ -48,6 +49,16 @@ flowchart TD
 PostgreSQL orders cosine distance from smallest to largest. The application
 converts distance to similarity with `1 - distance`, then applies the trial
 minimum of `0.30`. This score is not a confidence percentage.
+
+An optional `source` filename restricts the SQL candidates before ranking and
+selecting one chunk. Omitting it searches all sources. No eligible rows means
+a null score and skipped generation; a below-threshold candidate still has a
+numerical score. The filter selects documents and does not enforce permissions.
+
+`GET /sources` lists the stored filenames and chunk counts for the current
+embedding model, so callers can discover source values without a model call.
+It returns an empty list when no eligible rows exist and 503 when the database
+or its configuration is unavailable.
 
 A matched passage can still lack the requested detail. In that case, the prompt
 instructs the model to say the passage contains insufficient information.
@@ -75,12 +86,14 @@ whether that passage supports the answer.
 | Stored documents | Two sources, four chunks; counts checked directly | Both documents have database rows |
 | Retrieval evaluation | Reported 6/6 on Day 34 | Expected source/chunk pairs for six development queries |
 | Answer review | Supported remote-work and support-hours answers reported | Those two answers were checked against their passages |
-| Automated API tests | Reported 14 passing on Day 33 | Validation, metadata, error mapping, and simulated database failure |
-| Full test suite | Reported 32 passing on Day 33 | Classifier and knowledge API tests passed together |
+| Automated API tests | Reported 24 passing on Day 40 | Validation, source forwarding/catalog, metadata, error mapping, and simulated database failure |
+| Full test suite | Reported 50 passing on Day 40 | Classifier, knowledge API, and importer validation tests passed together |
 | Database failure | Dedicated test rerun passed with 503 and no model calls | A failed initial connection is not presented as no match |
 | Collection cleanup | Day 36 reported six rows reduced to four; repeat removed zero | Removed practice rows for an obsolete file and paragraph; retained both real chunk-1 pairs |
 | Import validation tests | Day 37 reported eight passing; 40 total tests | Reject stale/incomplete caches before a connection; use temporary files and a fake connection |
 | Real rollback exercise | Day 38 reported old text retained after cleanup failure and restored on retry | Checked earlier upsert rollback in a separate practice database; verified final contents |
+| Source filtering | Day 39 reported the selected remote-work source and null score for an unknown source | Manual requests exercised selection and no-candidate behavior |
+| Source catalog | Day 40 reported 200 with chunk counts 1 and 3 | The endpoint reads both indexed sources from PostgreSQL |
 
 Six development queries are too few to establish general retrieval accuracy.
 Automated API tests use simulated responses and do not measure real answer quality.
@@ -89,8 +102,10 @@ Automated API tests use simulated responses and do not measure real answer quali
 
 | Situation | HTTP result | Model calls in this path |
 | --- | --- | --- |
+| Source catalog query succeeds | 200, source list (possibly empty) | None |
 | Invalid or blank question | 422 | None |
 | Database connection fails before search | 503 | None |
+| Requested source has no eligible chunks | 200, null score, generation skipped | One query embedding |
 | Closest chunk is below the threshold | 200, generation skipped | One query embedding |
 | Accepted passage and successful generation | 200, generation completed | One query embedding and one generation |
 | Accepted passage lacks the answer | 200 if generation succeeds; model instructed to decline | One query embedding and one generation |
@@ -121,7 +136,7 @@ usage. The classifier uses its own Compose file and port 8000.
 ## Current limits and next improvement
 
 The assistant currently handles local `.txt` files and retrieves one paragraph
-per question. It has no document-upload interface or source filter. Large
+per question, optionally restricted to one source. It has no document-upload interface. Large
 paragraphs are not split to a token limit.
 
 Editing a text file does not update the live search by itself. The builder must
@@ -134,4 +149,6 @@ on this small collection.
 The selected cleanup improvement was completed in [Day 36](day-36.md).
 [Day 37](day-37.md) added automated checks for validation before a database
 connection. [Day 38](day-38.md) checked rollback with the real importer and a
-separate practice database. [Day 39](day-39.md) will add optional source filtering.
+separate practice database. [Day 39](day-39.md) added optional source filtering.
+[Day 40](day-40.md) added discovery of available sources and their chunk counts.
+[Day 41](day-41.md) will run the knowledge API alongside its database in Compose.

@@ -219,3 +219,12 @@ Unfiltered hours returned source: __
 Unknown-source status / score / generation: __ / __ / __
 Why must the source filter run before LIMIT 1: __
 ```
+
+Completed: reported 20 knowledge API tests, 46 total tests, and passing lint.
+Confirmed the filtered remote-work response returned `remote-work-policy.txt`,
+correcting a copied filename in the report. Unfiltered hours returned
+`sample-policy.txt`; an unknown source returned 200 with a null score and skipped
+generation. Explained that filtering must restrict candidates before choosing
+the closest chunk.
+
+Next: [Day 40 — list available sources](day-40.md).
