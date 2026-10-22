@@ -123,8 +123,11 @@ remaining limitations are recorded in the [walkthrough](project-02.md).
 - [x] Complete [Day 43](day-43.md): reported 10 tool tests, 60 total tests,
   passing lint, and real ticket 4 found as technical. Clarified that application
   code executes the function and that a model request alone makes no database query.
-- [ ] Complete [Day 44](day-44.md): describe the lookup function to the model
-  and inspect one requested call without executing it.
+- [x] Complete [Day 44](day-44.md): reported a lookup request for ticket 4,
+  a call ID, and 87 input / 7 output tokens. Correctly explained that the request
+  does not prove existence; code inspection corrected the execution flag to false.
+- [ ] Complete [Day 45](day-45.md): execute one allowed lookup request and
+  prepare its result with the original call ID; test rejected requests and failures.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

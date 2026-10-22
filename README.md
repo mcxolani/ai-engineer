@@ -46,8 +46,8 @@ debug the test suite, or use the Testing panel to debug individual tests.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
 Project 1 (Days 1–15) and the current Project 2 milestone (Days 16–42) are complete.
-Day 43 is complete in Project 3: support tools.
-Next: [Day 44 — inspect a model's tool request](docs/day-44.md) (20–30 minutes).
+Days 43–44 are complete in Project 3: support tools.
+Next: [Day 45 — execute the requested lookup](docs/day-45.md) (30–40 minutes).
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
 [Day 7](docs/day-07.md), [Day 8](docs/day-08.md), [Day 9](docs/day-09.md),
@@ -62,7 +62,7 @@ Next: [Day 44 — inspect a model's tool request](docs/day-44.md) (20–30 minut
 [Day 34](docs/day-34.md), [Day 35](docs/day-35.md), [Day 36](docs/day-36.md),
 [Day 37](docs/day-37.md), [Day 38](docs/day-38.md), [Day 39](docs/day-39.md),
 [Day 40](docs/day-40.md), [Day 41](docs/day-41.md), [Day 42](docs/day-42.md),
-and [Day 43](docs/day-43.md)
+[Day 43](docs/day-43.md), and [Day 44](docs/day-44.md)
 are available for reference.
 
 ## Later: turn on AI
