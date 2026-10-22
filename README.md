@@ -4,6 +4,8 @@ This service classifies customer tickets for a support team.
 
 [Project 1 walkthrough](docs/project-01.md) · [Knowledge assistant walkthrough](docs/project-02.md)
 
+[Project 3 — support tools](docs/project-03.md)
+
 
 Our first project accepts a customer message and returns a category, priority,
 sentiment, and summary.
@@ -43,9 +45,9 @@ debug the test suite, or use the Testing panel to debug individual tests.
 2. `app/main.py` receives the request.
 3. `app/classifier.py` returns the demo result or calls OpenAI.
 
-Project 1 (Days 1–15) and Days 16–41 are complete.
-Next: [Day 42 — check the knowledge container in CI](docs/day-42.md) (20–30 minutes),
-building toward a document knowledge assistant.
+Project 1 (Days 1–15) and the current Project 2 milestone (Days 16–42) are complete.
+Next: [Day 43 — build a read-only ticket tool](docs/day-43.md) (30–40 minutes),
+starting Project 3: support tools.
 [Day 1](docs/day-01.md), [Day 2](docs/day-02.md), [Day 3](docs/day-03.md),
 [Day 4](docs/day-04.md), [Day 5](docs/day-05.md), [Day 6](docs/day-06.md),
 [Day 7](docs/day-07.md), [Day 8](docs/day-08.md), [Day 9](docs/day-09.md),
@@ -59,7 +61,7 @@ building toward a document knowledge assistant.
 [Day 31](docs/day-31.md), [Day 32](docs/day-32.md), [Day 33](docs/day-33.md),
 [Day 34](docs/day-34.md), [Day 35](docs/day-35.md), [Day 36](docs/day-36.md),
 [Day 37](docs/day-37.md), [Day 38](docs/day-38.md), [Day 39](docs/day-39.md),
-[Day 40](docs/day-40.md), and [Day 41](docs/day-41.md)
+[Day 40](docs/day-40.md), [Day 41](docs/day-41.md), and [Day 42](docs/day-42.md)
 are available for reference.
 
 ## Later: turn on AI
@@ -128,5 +130,9 @@ supplies the API container with the database address `vector-db:5432`; local
 scripts continue to use `127.0.0.1:15433`. Rebuild the API image after code changes.
 
 Checks: `pytest -q` and `ruff check .`. Tests make no paid API calls.
+
+GitHub Actions runs those Python checks and a separate knowledge-container
+workflow. The container check builds the image, applies the schema to a fresh
+database, and verifies `/health` and an empty `/sources` response without model calls.
 
 The [roadmap](docs/roadmap.md) lists later milestones.

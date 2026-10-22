@@ -136,3 +136,13 @@ CI /sources status / body: __ / __
 CI cleanup: pass/fail
 Why is an empty source list correct in CI but not expected in your local demo: __
 ```
+
+Completed: reported GitHub lint and 50 Python tests passing, successful container
+build/start and schema setup, 200 from both endpoints, an empty source list, and
+successful cleanup. Explained that CI did not import any chunks.
+
+This completes the current Project 2 learning milestone: indexed documents,
+grounded answers, source filtering/catalog, containers, and automated checks.
+The limitations in the [project walkthrough](project-02.md) still apply.
+
+Next: [Day 43 — build a read-only ticket tool](day-43.md), starting Project 3.

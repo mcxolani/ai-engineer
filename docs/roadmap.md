@@ -111,8 +111,17 @@ The schedule can stretch around your available time.
 - [x] Complete [Day 41](day-41.md): reported healthy API/database containers,
   200 responses, correct source counts, and successful read after API restart.
   Explained service-name addressing and the database's internal port.
-- [ ] Complete [Day 42](day-42.md): build the knowledge container in GitHub
-  Actions, apply the schema, and check HTTP responses against an empty database.
+- [x] Complete [Day 42](day-42.md): reported GitHub lint and 50 tests passing,
+  container startup and schema success, 200 responses, an empty source list,
+  and successful cleanup. Explained the absence of imported chunks in CI.
+
+The current Project 2 learning milestone is complete; its measured results and
+remaining limitations are recorded in the [walkthrough](project-02.md).
+
+## Project 3 increments
+
+- [ ] Complete [Day 43](day-43.md): build and test a read-only saved-ticket
+  lookup with validated arguments, then call it directly against PostgreSQL.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

@@ -1,7 +1,7 @@
 # Knowledge assistant — project walkthrough
 
-Working core, collection cleanup, optional source filtering, source catalog,
-and the API container are complete through Day 41.
+The current Project 2 learning milestone is complete through Day 42: working
+core, collection cleanup, source filtering/catalog, containers, and CI checks.
 
 ## Problem
 
@@ -78,6 +78,7 @@ whether that passage supports the answer.
 | [knowledge_api.py](../knowledge_api.py) | Validate HTTP input/output and map errors |
 | [Dockerfile.knowledge](../Dockerfile.knowledge) | Build the knowledge API runtime image |
 | [compose.knowledge.yml](../compose.knowledge.yml) | Run the knowledge API and pgvector database |
+| [knowledge-container.yml](../.github/workflows/knowledge-container.yml) | Build and check the container against a fresh database in CI |
 | [evaluate_postgres.py](../evaluate_postgres.py) | Compare retrieved source/chunk pairs with expected results |
 | [test_knowledge_api.py](../tests/test_knowledge_api.py) | Check API behavior using simulated dependencies |
 
@@ -97,6 +98,7 @@ whether that passage supports the answer.
 | Source filtering | Day 39 reported the selected remote-work source and null score for an unknown source | Manual requests exercised selection and no-candidate behavior |
 | Source catalog | Day 40 reported 200 with chunk counts 1 and 3 | The endpoint reads both indexed sources from PostgreSQL |
 | Container run | Day 41 reported healthy containers, source counts 1 and 3, and successful read after API restart | The API container can reach the database and read indexed sources |
+| Container CI | Day 42 reported build, migration, HTTP checks, and cleanup passing; Python lint and 50 tests also passed | A fresh database and built API work together; `/sources` correctly returns an empty list |
 
 Six development queries are too few to establish general retrieval accuracy.
 Automated API tests use simulated responses and do not measure real answer quality.
@@ -159,4 +161,6 @@ connection. [Day 38](day-38.md) checked rollback with the real importer and a
 separate practice database. [Day 39](day-39.md) added optional source filtering.
 [Day 40](day-40.md) added discovery of available sources and their chunk counts.
 [Day 41](day-41.md) added the knowledge API to Compose alongside its database.
-[Day 42](day-42.md) will check the container and database together in GitHub Actions.
+[Day 42](day-42.md) checked the container and database together in GitHub Actions.
+Further retrieval and interface improvements remain possible. The next course
+milestone starts [Project 3: support tools](project-03.md).
