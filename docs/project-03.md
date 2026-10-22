@@ -1,6 +1,7 @@
 # Support tools — project notes
 
-Project 3 begins with [Day 43](day-43.md). Implementation is pending.
+The read-only lookup from [Day 43](day-43.md) is complete. Connecting it to model
+requests starts with [Day 44](day-44.md).
 
 ## Goal
 
@@ -10,15 +11,21 @@ model to guess a ticket's classification.
 
 ## First increment
 
-Build a read-only ticket lookup with validated arguments, a structured result,
-and distinct handling for missing tickets and unavailable storage. Test it with
-a fake reader, then read an existing ticket from the local Project 1 database.
-This first increment makes no model calls.
+The [lookup function](../support_tools.py) validates the ticket ID before calling
+Project 1's database reader. It returns a structured `found` or `not_found`
+result and raises `ToolUnavailable` for missing configuration or database errors.
+Its database URL comes from application configuration, separately from tool
+arguments. Direct calls make no model requests.
+
+Reported results: 10 tool tests, 60 total tests, passing lint, and a real lookup
+of ticket 4 returning `found` with category `technical`. The automated tool tests
+use a fake reader; the manual lookup checked the local database.
 
 ## Later increments
 
-Describe the function to a model, inspect a requested tool call, execute the
-allowed function in application code, and return its result to the model.
+Day 44 describes the function to a model and inspects a requested tool call.
+Following increments will execute the allowed function in application code
+and return its result to the model.
 Then test invalid arguments, unsupported function names, and bounded execution.
 
 The current ticket service has no user authorization. Any future tool that
