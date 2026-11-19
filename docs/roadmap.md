@@ -132,8 +132,12 @@ remaining limitations are recorded in the [walkthrough](project-02.md).
 - [x] Complete [Day 46](day-46.md): reported 6 assistant tests, 74 total tests,
   passing lint, and a technical / medium answer for ticket 4 that agreed with
   stored data. Clarified that lookup failure stops before the second model request.
-- [ ] Complete [Day 47](day-47.md): expose the ticket assistant through the API,
-  map failures, and verify request validation and response metadata.
+- [x] Complete [Day 47](day-47.md): reported 29 Project API tests, 85 total
+  tests, passing lint, and successful endpoint metadata for ticket 4. Clarified
+  that invalid input returns 422 before the helper runs; missing database and
+  unavailable lookup both return 503.
+- [ ] Complete [Day 48](day-48.md): include the ticket assistant modules in the
+  Project 1 Docker image and verify the container reads saved tickets after restart.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

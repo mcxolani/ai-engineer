@@ -1,7 +1,7 @@
 # Support tools — project notes
 
-The read-only lookup, model-request inspection, execution, and final response
-are complete through [Day 46](day-46.md). An HTTP endpoint is next.
+The read-only lookup, model-request inspection, execution, final response, and
+HTTP endpoint are complete through [Day 47](day-47.md). Container packaging is next.
 
 ## Goal
 
@@ -41,6 +41,16 @@ before the second model request.
 
 [Day 47](day-47.md) will expose this flow through the support API with input
 validation, response metadata, and safe error mapping.
+
+Day 47 added `POST /assistant/tickets/ask`. It validates questions, gets the
+database URL only from server configuration, and returns the answer, ticket ID,
+tool status, call ID, and generation state. It maps unavailable storage to 503.
+Reported results: 29 Project API tests, 85 total tests, and a live ticket-4
+response supported by stored data. Invalid HTTP input is rejected before the
+assistant helper is called.
+
+[Day 48](day-48.md) will include these new root-level modules in the Project 1
+Docker image and confirm the API still starts and reads saved tickets.
 
 The current ticket service has no user authorization. Any future tool that
 changes records will need explicit execution rules and tests for those rules.

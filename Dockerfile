@@ -6,6 +6,9 @@ WORKDIR /app
 
 COPY pyproject.toml ./
 COPY app ./app
+
+COPY support_tools.py request_ticket_tool.py execute_ticket_tool.py ticket_assistant.py ./
+
 RUN python -m pip install --no-cache-dir .
 
 RUN useradd --create-home appuser

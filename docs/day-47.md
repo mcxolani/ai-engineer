@@ -248,3 +248,13 @@ Missing-database status: __
 Tool-unavailable status: __
 Why is database_url rejected in the request body: __
 ```
+
+Completed: reported 29 Project API tests, 85 total tests, successful endpoint
+response for ticket 4, and 503 for missing database and unavailable lookup.
+The answer agreed with the stored technical / medium classification. Correctly
+explained that `extra="forbid"` rejects a client-provided database URL. The
+report said invalid input called the assistant helper, but the test asserts the
+opposite: invalid input returns 422 before the helper is called. Targeted lint
+and all 35 relevant API/assistant tests passed on recheck.
+
+Next: [Day 48 — package the ticket assistant in Docker](day-48.md).
