@@ -129,8 +129,11 @@ remaining limitations are recorded in the [walkthrough](project-02.md).
 - [x] Complete [Day 45](day-45.md): reported 8 executor tests, 68 total tests,
   passing lint, and ticket 4 found as technical. Rejected unknown functions and
   invalid JSON before lookup; explained the original call ID's purpose.
-- [ ] Complete [Day 46](day-46.md): return the lookup result to the model,
-  check the final answer against stored data, and test the two-request flow.
+- [x] Complete [Day 46](day-46.md): reported 6 assistant tests, 74 total tests,
+  passing lint, and a technical / medium answer for ticket 4 that agreed with
+  stored data. Clarified that lookup failure stops before the second model request.
+- [ ] Complete [Day 47](day-47.md): expose the ticket assistant through the API,
+  map failures, and verify request validation and response metadata.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

@@ -6,7 +6,15 @@ from pydantic import ValidationError
 from app.classifier import ClassificationUnavailable, classify_message
 from app.config import Settings
 from app.database import get_classification, save_classification
-from app.schemas import Classification, SavedClassification, TicketRequest
+from app.schemas import (
+    Classification,
+    SavedClassification,
+    TicketAssistantRequest,
+    TicketAssistantResponse,
+    TicketRequest,
+)
+from support_tools import ToolUnavailable
+from ticket_assistant import answer_ticket
 
 app = FastAPI(
     title="Support Ticket Classifier",
@@ -41,6 +49,38 @@ async def classify_ticket(ticket: TicketRequest, response: Response) -> Classifi
         raise HTTPException(503, "Could not save the classification") from exc
 
 
+@app.post("/assistant/tickets/ask", response_model=TicketAssistantResponse)
+def ask_about_ticket(request: TicketAssistantRequest):
+    database_url = settings.database_url.get_secret_value()
+    if not database_url:
+        raise HTTPException(503, "Database is not configured")
+
+    try:
+        result = answer_ticket(request.question, database_url)
+    except ToolUnavailable as exc:
+        raise HTTPException(503, "Ticket lookup is unavailable") from exc
+    except APITimeoutError as exc:
+        raise HTTPException(504, "The model provider timed out") from exc
+    except RateLimitError as exc:
+        raise HTTPException(503, "The model provider is temporarily unavailable") from exc
+    except (APIError, RuntimeError, ValueError) as exc:
+        raise HTTPException(502, "The assistant could not return a usable answer") from exc
+
+    tool_result = result["tool_result"]
+    if tool_result["status"] == "found":
+        ticket_id = tool_result["ticket"]["id"]
+    else:
+        ticket_id = tool_result["ticket_id"]
+
+    return {
+        "answer": result["answer"],
+        "ticket_id": ticket_id,
+        "tool_status": tool_result["status"],
+        "call_id": result["call_id"],
+        "generation": result["generation"],
+    }
+
+
 @app.get("/tickets/{classification_id}", response_model=SavedClassification)
 async def read_ticket(
     classification_id: int = Path(gt=0, le=9223372036854775807),
@@ -56,3 +96,4 @@ async def read_ticket(
     if saved is None:
         raise HTTPException(404, "Classification not found")
     return saved
+

@@ -16,9 +16,12 @@ Keep the answer to one or two sentences.
 """
 
 
-def answer_ticket(question):
+def answer_ticket(question, database_url=None):
+    if database_url is None:
+        database_url = os.getenv("DATABASE_URL", "")
+
     first = request_lookup(question)
-    tool_output = asyncio.run(execute_lookup(first, os.getenv("DATABASE_URL", "")))
+    tool_output = asyncio.run(execute_lookup(first, database_url))
 
     history = [{"role": "user", "content": question}]
     history.extend(first.output)
@@ -49,5 +52,5 @@ def answer_ticket(question):
 
 
 if __name__ == "__main__":
-    result = answer_ticket("What category and priority are saved for ticket 4?")
+    result = answer_ticket("What category and priority are saved for ticket 4?", os.getenv("DATABASE_URL", ""))
     print(json.dumps(result, indent=2))

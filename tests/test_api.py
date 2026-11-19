@@ -1,6 +1,6 @@
 import asyncio
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, Mock
 
 import httpx
 import pytest
@@ -11,6 +11,7 @@ from app import classifier, main
 from app.classifier import ClassificationUnavailable, classify_message
 from app.config import Settings
 from app.schemas import Classification
+from support_tools import ToolUnavailable
 
 
 @pytest.fixture
@@ -165,3 +166,76 @@ def test_read_saved_ticket(client, monkeypatch, status):
     else:
         expected = "Classification not found" if status == 404 else "Could not read the classification"
         assert response.json() == {"detail": expected}
+
+
+@pytest.fixture
+def assistant(client, monkeypatch):
+    from pydantic import SecretStr
+    main.settings.database_url = SecretStr("postgresql://unused-in-test")
+    fake = Mock(return_value={
+        "answer": "Ticket 4 is technical with medium priority.",
+        "call_id": "call_test_4",
+        "tool_result": {"status": "found", "ticket": {"id": 4}},
+        "generation": "completed",
+    })
+    monkeypatch.setattr(main, "answer_ticket", fake)
+    return fake
+
+
+def test_assistant_answer_and_metadata(client, assistant):
+    response = client.post(
+        "/assistant/tickets/ask",
+        json={"question": "  What is saved for ticket 4?  "},
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "answer": "Ticket 4 is technical with medium priority.",
+        "ticket_id": 4,
+        "tool_status": "found",
+        "call_id": "call_test_4",
+        "generation": "completed",
+    }
+    assistant.assert_called_once_with("What is saved for ticket 4?", "postgresql://unused-in-test")
+
+
+def test_assistant_not_found_is_success(client, assistant):
+    assistant.return_value["tool_result"] = {"status": "not_found", "ticket_id": 999}
+    assistant.return_value["answer"] = "Ticket 999 was not found."
+    response = client.post("/assistant/tickets/ask", json={"question": "ticket 999"})
+    assert response.status_code == 200
+    assert response.json()["ticket_id"] == 999
+    assert response.json()["tool_status"] == "not_found"
+
+
+@pytest.mark.parametrize("body", [
+    {}, {"question": "   "}, {"question": "x" * 2001}, {"question": 4},
+    {"question": "ticket 4", "database_url": "postgresql://attacker"},
+])
+def test_invalid_assistant_input_skips_helper(client, assistant, body):
+    response = client.post("/assistant/tickets/ask", json=body)
+    assert response.status_code == 422
+    assistant.assert_not_called()
+
+
+def test_assistant_needs_configured_database(client, monkeypatch):
+    from pydantic import SecretStr
+    main.settings.database_url = SecretStr("")
+    helper = Mock()
+    monkeypatch.setattr(main, "answer_ticket", helper)
+    response = client.post("/assistant/tickets/ask", json={"question": "ticket 4"})
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Database is not configured"}
+    helper.assert_not_called()
+
+
+@pytest.mark.parametrize("error,status,detail", [
+    (ToolUnavailable("private database details"), 503, "Ticket lookup is unavailable"),
+    (APITimeoutError(request=httpx.Request("POST", "https://example.test")), 504, "The model provider timed out"),
+    (RuntimeError("private model details"), 502, "The assistant could not return a usable answer"),
+])
+def test_assistant_errors_are_safe(client, assistant, error, status, detail):
+    assistant.side_effect = error
+    response = client.post("/assistant/tickets/ask", json={"question": "ticket 4"})
+    assert response.status_code == status
+    assert response.json() == {"detail": detail}
+    assert "private" not in response.text

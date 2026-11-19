@@ -1,7 +1,7 @@
 # Support tools — project notes
 
-The read-only lookup, model-request inspection, and execution are complete
-through [Day 45](day-45.md). Returning the result to the model is next.
+The read-only lookup, model-request inspection, execution, and final response
+are complete through [Day 46](day-46.md). An HTTP endpoint is next.
 
 ## Goal
 
@@ -33,9 +33,14 @@ results: 8 executor tests, 68 total tests, passing lint, and ticket 4 found as
 technical. Unknown names and invalid JSON skipped the lookup. These steps have
 not yet sent the saved ticket result to the model.
 
-[Day 46](day-46.md) will add a second model request containing the question,
-function call, and function result. It will disable further tool calls and check
-the final answer against the stored classification.
+[Day 46](day-46.md) added a second model request containing the question,
+function call, and result. It disables further tool calls and returned an answer
+that agreed with ticket 4's stored technical / medium classification. This full
+flow has two model requests and one database read. If lookup fails, it stops
+before the second model request.
+
+[Day 47](day-47.md) will expose this flow through the support API with input
+validation, response metadata, and safe error mapping.
 
 The current ticket service has no user authorization. Any future tool that
 changes records will need explicit execution rules and tests for those rules.

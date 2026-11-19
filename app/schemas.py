@@ -24,3 +24,19 @@ class SavedClassification(BaseModel):
     message: str
     result: Classification
     created_at: datetime
+
+
+class TicketAssistantRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    question: str = Field(min_length=1, max_length=2000)
+
+
+class TicketAssistantResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    answer: str = Field(min_length=1)
+    ticket_id: int = Field(gt=0)
+    tool_status: Literal["found", "not_found"]
+    call_id: str = Field(min_length=1)
+    generation: Literal["completed"]
