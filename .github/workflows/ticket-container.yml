@@ -1,0 +1,61 @@
+name: Ticket container checks
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSE_PROJECT_NAME: ticket-ci
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create demo environment
+        run: printf '%s\n' 'CLASSIFIER_PROVIDER=demo' 'OPENAI_API_KEY=' > .env
+
+      - name: Validate Compose
+        run: docker compose config --quiet
+
+      - name: Build and start services
+        run: docker compose up -d --build --wait --wait-timeout 90
+
+      - name: Create database schema
+        run: |
+          docker compose exec -T db \
+            psql -X -U ticket_app -d tickets \
+            --set=ON_ERROR_STOP=1 --single-transaction --file=- \
+            < migrations/001_create_classifications.sql
+
+      - name: Check HTTP responses
+        run: |
+          python3 - <<'PY'
+          import json
+          import urllib.error
+          import urllib.request
+
+          with urllib.request.urlopen("http://127.0.0.1:8000/health", timeout=5) as response:
+              assert response.status == 200
+              assert json.load(response) == {"status": "ok", "provider": "demo"}
+              print("/health: 200")
+
+          try:
+              urllib.request.urlopen("http://127.0.0.1:8000/tickets/999", timeout=5)
+          except urllib.error.HTTPError as error:
+              assert error.code == 404
+              assert json.load(error) == {"detail": "Classification not found"}
+              print("/tickets/999: 404")
+          else:
+              raise AssertionError("Expected a 404 for the empty CI database")
+          PY
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs --no-color --tail=100
+
+      - name: Remove CI containers and volume
+        if: always()
+        run: docker compose down --volumes

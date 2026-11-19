@@ -87,3 +87,11 @@ GET /tickets/4 status / category: __ / __
 GET /tickets/4 after API restart: __
 Why must the Docker image copy the root tool modules: __
 ```
+
+Completed: reported 85 tests, passing lint, valid Compose configuration, healthy
+API and database containers, and successful health/ticket reads before and after
+an API restart. The active classifier provider was `openai`; health and ticket
+reads did not call it. Correctly explained that the tool modules live outside
+the `app` folder and must be copied into the image.
+
+Next: [Day 49 — check the ticket container in CI](day-49.md).

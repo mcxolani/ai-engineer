@@ -136,8 +136,11 @@ remaining limitations are recorded in the [walkthrough](project-02.md).
   tests, passing lint, and successful endpoint metadata for ticket 4. Clarified
   that invalid input returns 422 before the helper runs; missing database and
   unavailable lookup both return 503.
-- [ ] Complete [Day 48](day-48.md): include the ticket assistant modules in the
-  Project 1 Docker image and verify the container reads saved tickets after restart.
+- [x] Complete [Day 48](day-48.md): reported 85 tests, passing lint, healthy
+  containers, and preserved ticket reads after API restart. Confirmed root tool
+  modules must be present in the Docker image.
+- [ ] Complete [Day 49](day-49.md): build the ticket API in GitHub Actions,
+  apply a fresh schema, and verify health plus a missing-ticket 404.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.

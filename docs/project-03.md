@@ -1,7 +1,8 @@
 # Support tools — project notes
 
-The read-only lookup, model-request inspection, execution, final response, and
-HTTP endpoint are complete through [Day 47](day-47.md). Container packaging is next.
+The read-only lookup, model-request inspection, execution, final response, HTTP
+endpoint, and container packaging are complete through [Day 48](day-48.md).
+Container CI is next.
 
 ## Goal
 
@@ -49,8 +50,10 @@ Reported results: 29 Project API tests, 85 total tests, and a live ticket-4
 response supported by stored data. Invalid HTTP input is rejected before the
 assistant helper is called.
 
-[Day 48](day-48.md) will include these new root-level modules in the Project 1
-Docker image and confirm the API still starts and reads saved tickets.
+[Day 48](day-48.md) included the root-level modules in the Project 1 Docker
+image. The container successfully started and read ticket 4 after an API restart
+without a model call. [Day 49](day-49.md) will make that build/start and empty
+database behavior repeatable in GitHub Actions.
 
 The current ticket service has no user authorization. Any future tool that
 changes records will need explicit execution rules and tests for those rules.
