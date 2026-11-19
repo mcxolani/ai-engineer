@@ -126,8 +126,11 @@ remaining limitations are recorded in the [walkthrough](project-02.md).
 - [x] Complete [Day 44](day-44.md): reported a lookup request for ticket 4,
   a call ID, and 87 input / 7 output tokens. Correctly explained that the request
   does not prove existence; code inspection corrected the execution flag to false.
-- [ ] Complete [Day 45](day-45.md): execute one allowed lookup request and
-  prepare its result with the original call ID; test rejected requests and failures.
+- [x] Complete [Day 45](day-45.md): reported 8 executor tests, 68 total tests,
+  passing lint, and ticket 4 found as technical. Rejected unknown functions and
+  invalid JSON before lookup; explained the original call ID's purpose.
+- [ ] Complete [Day 46](day-46.md): return the lookup result to the model,
+  check the final answer against stored data, and test the two-request flow.
 
 Each increment should leave a working service. Start portfolio and interview notes
 as you build; begin applications once you can demonstrate a useful, tested project.
